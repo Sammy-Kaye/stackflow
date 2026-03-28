@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "mcp__github__search_repositories"
+      "mcp__github__search_repositories",
+      "mcp__github__get_file_contents",
+      "mcp__postgres__query",
+      "Bash(find 'D:/My Projects/Stackflow' -name *.html)",
+      "Bash(powershell -File:*)",
+      "mcp__stitch__list_projects"
     ]
   }
 }

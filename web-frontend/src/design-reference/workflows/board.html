@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Workflows | StackFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#68dbae",
+                        "secondary-container": "#295140",
+                        "on-secondary-fixed-variant": "#264e3e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed": "#002115",
+                        "secondary": "#a5d0ba",
+                        "on-tertiary-fixed": "#410003",
+                        "surface-container-highest": "#353534",
+                        "tertiary-container": "#db726b",
+                        "on-error": "#690005",
+                        "primary-fixed-dim": "#68dbae",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffb3ad",
+                        "surface": "#131313",
+                        "outline": "#87948c",
+                        "on-primary-fixed": "#002115",
+                        "on-tertiary-container": "#560d0e",
+                        "on-primary": "#003827",
+                        "on-primary-container": "#003121",
+                        "secondary-fixed-dim": "#a5d0ba",
+                        "primary-container": "#26a37a",
+                        "on-secondary": "#0d3728",
+                        "on-tertiary-fixed-variant": "#7e2a27",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#5f1413",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-dim": "#131313",
+                        "primary-fixed": "#86f8c9",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-container": "#97c2ac",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#313030",
+                        "background": "#131313",
+                        "on-surface-variant": "#bccac1",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#3d4943",
+                        "tertiary-fixed": "#ffdad6",
+                        "on-primary-fixed-variant": "#00513a",
+                        "surface-bright": "#3a3939",
+                        "primary": "#68dbae",
+                        "inverse-primary": "#006c4e",
+                        "surface-variant": "#353534",
+                        "on-surface": "#e5e2e1",
+                        "secondary-fixed": "#c0ecd6"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #353534; border-radius: 10px; }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .teal-gradient {
+            background: linear-gradient(135deg, #68DBAE 0%, #26A37A 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#1C1B1B] flex flex-col justify-between py-8 px-4">
+<div class="space-y-8">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded teal-gradient flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-lg" style="font-variation-settings: 'FILL' 1;">dataset</span>
+</div>
+<div>
+<h1 class="font-['Manrope'] text-xl font-bold tracking-tight text-[#E5E2E1]">StackFlow</h1>
+<p class="text-[0.625rem] uppercase tracking-[0.1em] text-on-surface-variant font-semibold">Enterprise Engine</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] font-medium tracking-wide text-[#BCCAC1] hover:text-[#E5E2E1] hover:bg-[#3A3939] transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="assignment">assignment</span>
+<span>My Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] font-medium tracking-wide text-[#BCCAC1] hover:text-[#E5E2E1] hover:bg-[#3A3939] transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_tree">account_tree</span>
+<span>Workflows</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] text-[#E5E2E1] bg-[#201F1F] rounded-lg font-semibold transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px] text-[#1D9E75]" data-icon="lan" style="font-variation-settings: 'FILL' 1;">lan</span>
+<span>Active Workflows</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] font-medium tracking-wide text-[#BCCAC1] hover:text-[#E5E2E1] hover:bg-[#3A3939] transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span>Templates</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] font-medium tracking-wide text-[#BCCAC1] hover:text-[#E5E2E1] hover:bg-[#3A3939] transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Admin</span>
+</a>
+</nav>
+</div>
+<div class="space-y-1 pt-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-3 py-2.5 font-['Inter'] text-[0.875rem] font-medium tracking-wide text-[#BCCAC1] hover:text-[#E5E2E1] hover:bg-[#3A3939] transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span>Notifications</span>
+</a>
+<div class="flex items-center gap-3 px-3 py-3 mt-2 bg-surface-container-high/40 rounded-xl">
+<img class="w-8 h-8 rounded-full bg-surface-variant object-cover" data-alt="Close-up professional portrait of a modern corporate executive with a neutral expression, soft studio lighting, professional dark grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCiNL4_ATx6bJW1MwvGnwr3wOffXhbgtHvAEnPY93ueqPjexCuTO_BYUeT7t4MnGfawofAfRU15tMGYmg-3fqUZzwxe-HLwhIV5hpZK8bw4fuX1heon-xCLeN-CepDPoD1WLc8OuGJ9ks_USZ9njgX0F9PQ94xYmtDHEDGAWSCJuNWsMn40hF8aHzUMCFTQOC_XKS536uZzdr14s6RSb1jnPVldyuY9Bv0_T12BZ5RYuNa1HGCny24AuW0YFXR-sAIcR_uCD4GqHSC"/>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold truncate text-on-surface">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant truncate">Lead Architect</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-64 min-h-screen relative flex flex-col bg-surface">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-20 z-30 bg-[#131313]/80 backdrop-blur-xl flex justify-between items-center px-10">
+<div class="flex items-baseline gap-4">
+<h2 class="font-['Manrope'] text-2xl font-bold tracking-tight text-[#E5E2E1]">Active Workflows</h2>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold tracking-widest uppercase">Live Tracking</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-[#BCCAC1]">
+<button class="hover:text-[#E5E2E1] transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="hover:text-[#E5E2E1] transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+<button class="teal-gradient text-on-primary-container px-6 py-2.5 rounded-lg font-['Manrope'] font-bold text-sm flex items-center gap-2 hover:shadow-[0_0_15px_-5px_#86F8C9] transition-all duration-300">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Start new workflow
+                </button>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="pt-28 pb-16 px-10 max-w-7xl mx-auto w-full">
+<!-- Filter Bar -->
+<section class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-2 bg-surface-container-low p-1.5 rounded-xl">
+<button class="px-5 py-2 rounded-lg text-sm font-semibold bg-surface-bright text-on-surface shadow-sm">All</button>
+<button class="px-5 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">In Progress</button>
+<button class="px-5 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Completed</button>
+<button class="px-5 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">Cancelled</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] transition-colors group-focus-within:text-primary" data-icon="search">search</span>
+<input class="w-72 bg-surface-container-lowest border-none rounded-xl pl-12 pr-4 py-2.5 text-sm focus:ring-1 focus:ring-primary/40 text-on-surface placeholder:text-on-surface-variant/50 transition-all" placeholder="Search workflows..." type="text"/>
+</div>
+<div class="flex items-center gap-2 px-4 py-2.5 bg-surface-container-low rounded-xl cursor-pointer hover:bg-surface-container transition-colors border border-outline-variant/10">
+<span class="text-xs font-medium text-on-surface-variant">Started:</span>
+<span class="text-xs font-bold text-on-surface">Newest first</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Workflow Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-16">
+<!-- Card 1: In Progress -->
+<div class="bg-surface-container rounded-2xl p-6 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-black/40 group">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<h3 class="text-lg font-bold text-on-surface leading-tight">Client Onboarding — Acme Corp</h3>
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase tracking-wider">In Progress</span>
+<span class="text-[11px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+                                    Mar 22, 2026
+                                </span>
+</div>
+</div>
+<button class="p-2 hover:bg-surface-bright rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<!-- Progress Bar Section -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-[11px] font-bold text-primary uppercase tracking-widest">Efficiency 50%</span>
+<span class="text-xs font-medium text-on-surface-variant">3 of 6 tasks complete</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full teal-gradient rounded-full w-1/2"></div>
+</div>
+</div>
+<!-- Activity Feed -->
+<div class="space-y-4">
+<p class="text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-[0.2em] mb-3">Recent Activity</p>
+<div class="flex gap-4 items-start relative pb-4">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5 z-10"></div>
+<div class="absolute left-[3px] top-4 bottom-0 w-[1px] bg-outline-variant/20"></div>
+<div class="flex-1">
+<p class="text-xs text-on-surface"><span class="font-bold">Alice</span> completed <span class="text-on-surface-variant">Step 3</span></p>
+<p class="text-[10px] text-on-surface-variant/60">1h ago</p>
+</div>
+</div>
+<div class="flex gap-4 items-start relative pb-4">
+<div class="w-2 h-2 rounded-full bg-outline-variant/40 mt-1.5 z-10"></div>
+<div class="absolute left-[3px] top-4 bottom-0 w-[1px] bg-outline-variant/20"></div>
+<div class="flex-1">
+<p class="text-xs text-on-surface"><span class="font-bold">Sam</span> approved <span class="text-on-surface-variant">Step 2</span></p>
+<p class="text-[10px] text-on-surface-variant/60">Yesterday</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-2 h-2 rounded-full bg-outline-variant/20 mt-1.5 z-10"></div>
+<div class="flex-1">
+<p class="text-xs text-on-surface">Workflow started</p>
+<p class="text-[10px] text-on-surface-variant/60">Mar 22</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: In Progress -->
+<div class="bg-surface-container rounded-2xl p-6 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-black/40 group">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<h3 class="text-lg font-bold text-on-surface leading-tight">Purchase Approval — Q2 Budget</h3>
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase tracking-wider">In Progress</span>
+<span class="text-[11px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+                                    Mar 25, 2026
+                                </span>
+</div>
+</div>
+<button class="p-2 hover:bg-surface-bright rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<!-- Progress Bar Section -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-[11px] font-bold text-primary uppercase tracking-widest">Efficiency 25%</span>
+<span class="text-xs font-medium text-on-surface-variant">1 of 4 tasks complete</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full teal-gradient rounded-full w-1/4"></div>
+</div>
+</div>
+<!-- Activity Feed -->
+<div class="space-y-4">
+<p class="text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-[0.2em] mb-3">Recent Activity</p>
+<div class="flex gap-4 items-start">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5 z-10 animate-pulse"></div>
+<div class="flex-1">
+<p class="text-xs text-on-surface">Awaiting finance approval</p>
+<p class="text-[10px] text-on-surface-variant/60">2h ago</p>
+</div>
+</div>
+<div class="mt-8 p-4 bg-surface-container-lowest/50 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<p class="text-xs text-on-surface-variant leading-relaxed">System is waiting for <span class="text-on-surface font-semibold">Director's Sign-off</span> to unlock the next phase.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Completed -->
+<div class="bg-surface-container/40 opacity-70 rounded-2xl p-6 transition-all duration-300 hover:opacity-100 hover:bg-surface-container group">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<h3 class="text-lg font-bold text-on-surface leading-tight">Employee Onboarding — James</h3>
+<div class="flex items-center gap-3">
+<span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Completed</span>
+<span class="text-[11px] text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+                                    Mar 10, 2026
+                                </span>
+</div>
+</div>
+<button class="p-2 hover:bg-surface-bright rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<!-- Progress Bar Section -->
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-[11px] font-bold text-primary uppercase tracking-widest">Success 100%</span>
+<span class="text-xs font-medium text-on-surface-variant">6 of 6 tasks</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-full"></div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 items-start">
+<div class="w-2 h-2 rounded-full bg-primary/40 mt-1.5"></div>
+<div class="flex-1">
+<p class="text-xs text-on-surface">Workflow completed</p>
+<p class="text-[10px] text-on-surface-variant/60">Mar 20</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Action Template -->
+<div class="border-2 border-dashed border-outline-variant/20 rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-all">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h4 class="text-sm font-bold text-on-surface mb-1">New Batch Process</h4>
+<p class="text-xs text-on-surface-variant max-w-[200px]">Quick start a recurring workflow from your saved templates.</p>
+</div>
+</div>
+<!-- Empty State -->
+<section class="mt-20 flex flex-col items-center justify-center py-20 px-4 bg-surface-container-low/30 rounded-[2rem] border border-outline-variant/5">
+<div class="w-24 h-24 mb-8 opacity-20 relative">
+<span class="material-symbols-outlined text-[96px] text-primary" data-icon="layers_clear" style="font-variation-settings: 'wght' 200;">layers_clear</span>
+<div class="absolute inset-0 teal-gradient blur-3xl opacity-20 rounded-full"></div>
+</div>
+<h2 class="font-headline text-3xl font-extrabold text-[#E5E2E1] mb-3">No workflows running</h2>
+<p class="text-on-surface-variant text-base mb-10 max-w-md text-center">Publish a workflow to start tracking here. Your active orchestration layer will visualize data in real-time once steps are triggered.</p>
+<div class="flex items-center gap-4">
+<button class="bg-surface-container-highest text-on-surface px-8 py-3 rounded-xl font-bold text-sm hover:bg-surface-bright transition-colors">
+                        View History
+                    </button>
+<button class="teal-gradient text-on-primary-container px-8 py-3 rounded-xl font-bold text-sm flex items-center gap-2 hover:shadow-[0_0_20px_-5px_#1D9E75] transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        Build a workflow
+                    </button>
+</div>
+</section>
+</div>
+<!-- Footer Visual Hint -->
+<div class="mt-auto py-8 text-center border-t border-outline-variant/5">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-[0.3em] font-medium">Powering enterprise orchestration with StackFlow Engine v4.2</p>
+</div>
+</main>
+</body></html>

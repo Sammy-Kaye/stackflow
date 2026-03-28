@@ -211,7 +211,8 @@ Contains: collection of WorkflowTask templates
 **WorkflowTask** — one step in the blueprint
 ```
 Fields: Id, WorkflowId, Title, Description, AssigneeType, DefaultAssignedToEmail,
-        OrderIndex, DueAtOffsetDays, NodeType, ConditionConfig, ParentTaskId
+        OrderIndex, DueAtOffsetDays, NodeType, ConditionConfig, ParentTaskId,
+        AttachmentKey, AttachmentFilename, AttachmentContentType, AttachmentSizeBytes
 Enums:
   AssigneeType: Internal | External
   NodeType:     Task | Approval | Condition | Notification | ExternalStep | Deadline
@@ -232,7 +233,9 @@ Enums:
 ```
 Fields: Id, WorkflowStateId (FK), WorkflowTaskId (FK), Status, AssignedToEmail,
         AssignedToUserId, DueDate, CompletionToken, TokenExpiresAt, IsTokenUsed,
-        CompletionNotes, DeclineReason, Priority
+        CompletionNotes, DeclineReason, Priority,
+        ResponseAttachmentKey, ResponseAttachmentFilename, ResponseAttachmentContentType,
+        ResponseAttachmentSizeBytes, ResponseAttachmentVersion
 Enums:
   Status:   Pending | InProgress | Completed | Declined | Expired | Skipped
   Priority: Low | Medium | High | Critical
@@ -589,7 +592,8 @@ docker compose up -d               # start all services
 | Error handling | Result pattern — never throw business exceptions |
 | Validation | FluentValidation — runs in ValidationBehavior pipeline step |
 | Messaging | RabbitMQ — raw client, no MassTransit |
-| Email | MailKit + SMTP (free, self-controlled) |
+| Email | MailKit + SMTP — Brevo as provider (free tier, swap via appsettings.json) |
+| File storage | Cloudflare R2 (prod) + MinIO (local dev) — S3-compatible, same AWSSDK.S3 code |
 | Real-time | SignalR |
 | Auth | JWT + refresh tokens, Google OAuth, Email OTP, Email+Password |
 | Testing | xUnit + Moq (unit), WebApplicationFactory (integration) |
@@ -633,15 +637,26 @@ docker compose up -d               # start all services
 | My Tasks view | Not started |
 | Active Workflows board | Not started |
 
-### Phase 2 — Auth, notifications, approvals (Not started)
+### Phase 2 — Auth, notifications, approvals, file attachments (Not started)
 
 Auth (Email+Password, Google OAuth, OTP, Password Reset, JWT, refresh tokens),
 SMTP email via MailKit, RabbitMQ event consumers, SignalR in-app notifications,
 Approval nodes, External task tokens.
 
-### Phase 3 — Analytics, calendar, infrastructure (Not started)
+**Task file attachments:**
+- Workflow builder: attach a single file to any Task or External Step node at build time
+- Task detail: download the attached file; upload a response file
+- External task page: same — download, upload response, no login required
+- Storage: one attachment file + one response file per task node; max 10 MB each; allowed formats: PDF, DOCX, XLSX, PNG, JPG
+- File stored in object storage (S3-compatible); file reference (bucket key, original filename, content type, size) stored on the `WorkflowTask` record
+- Folder structure: `workspaces/{workspaceId}/workflows/{workflowId}/tasks/{taskId}/{version}/{filename}`
+- Versioning: each upload increments a version counter on the task record — previous versions are retained in storage but only the latest is surfaced in the UI
+- No CDN — files are served via signed URLs generated on demand by the API (15 minute expiry)
+
+### Phase 3 — Analytics, calendar, infrastructure, group workspaces (Not started)
 
 Analytics dashboard (Recharts), Calendar view, Google/Outlook calendar sync,
+Triggered/scheduled workflows, Group workspaces,
 Proxmox hosting + Terraform + Ansible.
 
 ---
@@ -654,6 +669,9 @@ Proxmox hosting + Terraform + Ansible.
 | Result pattern, not exceptions | Explicit error handling — no hidden control flow |
 | PostgreSQL only | One database engine — no SQL Server for this project |
 | MailKit + SMTP, not Postmark/SendGrid | Free, self-controlled, no paid plan needed |
+| Brevo for SMTP provider | Free tier (300 emails/day), reliable deliverability, MailKit compatible — swap via appsettings.json if needed |
+| Cloudflare R2 for file storage (prod), MinIO for local dev | R2: free tier, zero egress fees, S3-compatible. MinIO: runs in Docker Compose, identical API — same `AWSSDK.S3` package and service code for both, endpoint/credentials swapped via env vars |
+| Single file per task node, 10 MB cap, allowlist of formats | Keeps storage predictable; prevents abuse on external-facing upload endpoints |
 | Email+Password + Google OAuth + OTP | Three auth methods — covers all user preferences |
 | Password reset implemented | Email+Password requires account recovery — cannot skip |
 | React Flow for canvas | Best-in-class node-based editor for React |

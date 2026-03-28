@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary": "#ffb3ad",
+            "surface-container": "#201f1f",
+            "surface-container-high": "#2a2a2a",
+            "on-tertiary": "#5f1413",
+            "secondary-container": "#295140",
+            "primary-container": "#26a37a",
+            "on-surface": "#e5e2e1",
+            "surface-dim": "#131313",
+            "secondary-fixed": "#c0ecd6",
+            "primary-fixed-dim": "#68dbae",
+            "primary-fixed": "#86f8c9",
+            "on-tertiary-fixed-variant": "#7e2a27",
+            "surface-variant": "#353534",
+            "on-primary-fixed": "#002115",
+            "background": "#131313",
+            "surface-tint": "#68dbae",
+            "outline-variant": "#3d4943",
+            "error-container": "#93000a",
+            "tertiary-fixed-dim": "#ffb3ad",
+            "on-secondary-fixed": "#002115",
+            "tertiary-fixed": "#ffdad6",
+            "on-secondary-container": "#97c2ac",
+            "on-error": "#690005",
+            "on-primary-fixed-variant": "#00513a",
+            "inverse-surface": "#e5e2e1",
+            "surface-bright": "#3a3939",
+            "on-secondary-fixed-variant": "#264e3e",
+            "secondary-fixed-dim": "#a5d0ba",
+            "outline": "#87948c",
+            "error": "#ffb4ab",
+            "surface": "#131313",
+            "on-error-container": "#ffdad6",
+            "on-primary-container": "#003121",
+            "inverse-primary": "#006c4e",
+            "on-secondary": "#0d3728",
+            "surface-container-highest": "#353534",
+            "on-surface-variant": "#bccac1",
+            "on-primary": "#003827",
+            "on-tertiary-fixed": "#410003",
+            "tertiary-container": "#db726b",
+            "surface-container-low": "#1c1b1b",
+            "primary": "#68dbae",
+            "on-tertiary-container": "#560d0e",
+            "on-background": "#e5e2e1",
+            "inverse-on-surface": "#313030",
+            "surface-container-lowest": "#0e0e0e",
+            "secondary": "#a5d0ba"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(28, 27, 27, 0.85);
+      backdrop-filter: blur(24px);
+    }
+  </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased overflow-hidden">
+<!-- Background Content (Blurred Canvas) -->
+<div class="fixed inset-0 z-0 flex p-8 gap-8">
+<div class="flex-1 flex flex-col gap-6 opacity-40 blur-sm pointer-events-none">
+<div class="h-16 w-full bg-surface-container rounded-xl"></div>
+<div class="grid grid-cols-3 gap-6 h-full">
+<div class="col-span-2 bg-surface-container-low rounded-xl p-8">
+<div class="w-1/3 h-8 bg-surface-bright rounded mb-8"></div>
+<div class="space-y-4">
+<div class="w-full h-4 bg-outline-variant/20 rounded"></div>
+<div class="w-full h-4 bg-outline-variant/20 rounded"></div>
+<div class="w-2/3 h-4 bg-outline-variant/20 rounded"></div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-8">
+<div class="w-1/2 h-8 bg-surface-bright rounded mb-8"></div>
+<div class="space-y-4">
+<div class="aspect-square w-full bg-surface-container rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Slide-out Panel Overlay -->
+<div class="fixed inset-0 z-40 bg-background/40 backdrop-blur-md">
+<aside class="fixed top-0 right-0 h-screen w-[380px] glass-panel shadow-[0px_8px_32px_rgba(229,226,225,0.04)] flex flex-col border-l border-outline-variant/10">
+<!-- Panel Header -->
+<header class="h-20 px-8 flex items-center justify-between">
+<h2 class="font-headline text-xl font-extrabold tracking-tighter text-on-surface">Notifications</h2>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-bright transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</header>
+<!-- Empty State Content -->
+<main class="flex-1 flex flex-col items-center justify-center px-12 text-center">
+<!-- Iconic Anchor -->
+<div class="relative mb-8">
+<div class="absolute inset-0 bg-primary/10 blur-3xl rounded-full scale-150"></div>
+<div class="relative w-24 h-24 flex items-center justify-center rounded-full bg-surface-container-highest/40 border border-outline-variant/10">
+<span class="material-symbols-outlined text-5xl text-on-surface-variant/40" style="font-variation-settings: 'wght' 200;">notifications</span>
+</div>
+</div>
+<!-- Typography Stack -->
+<div class="space-y-3">
+<h3 class="font-headline text-2xl font-bold tracking-tight text-on-surface">You're all caught up</h3>
+<p class="text-on-surface-variant font-body leading-relaxed text-sm">
+            This is where you'll see updates on your workflows, team mentions, and project alerts.
+          </p>
+</div>
+<!-- Ambient Decoration (Tonal Shift) -->
+<div class="mt-16 w-1 h-12 bg-gradient-to-b from-primary/20 to-transparent rounded-full opacity-50"></div>
+</main>
+<!-- Panel Footer (Optional Metadata/Links) -->
+<footer class="p-8">
+<div class="h-[1px] w-full bg-outline-variant/10 mb-6"></div>
+<div class="flex justify-center gap-6">
+<span class="text-[10px] font-medium tracking-widest uppercase text-outline-variant">StackFlow Engine v2.4</span>
+</div>
+</footer>
+</aside>
+</div>
+<!-- Hidden Image Reference for Atmospheric Consistency (Design System Requirement) -->
+<div class="hidden">
+<img alt="Design Inspiration" data-alt="Abstract minimal 3D background with flowing dark glass ribbons and subtle teal light glowing from the core" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6hJId32hrsumsS91uOSgcT3-Di8tB-GaAN0lb2U5vTMm0ZCtRmqlIbCQb576sU-oIGyhJR-iZlfh06gbAsBTGaYlx_wDgt_drw4TtgfIUr9n_qr6w0dDn4Vyyk8gEKL8R9YaIOFfFQrKHZ0u_U7eadfhSXOaRG8ba1ARGktP9mOj3FyfvmZtxU28vEPrFbIIeDZYN4y-QEdt2NgnENJDnP2IFb2wbBfMXHHlXiR56T_jKrMggmXqGYslbtRp9FQfa06wDMnGO-ESj"/>
+</div>
+</body></html>
