@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#1c1b1b",
+            "surface-variant": "#353534",
+            "secondary": "#a5d0ba",
+            "inverse-surface": "#e5e2e1",
+            "tertiary": "#ffb3ad",
+            "on-surface": "#e5e2e1",
+            "on-secondary-container": "#97c2ac",
+            "outline-variant": "#3d4943",
+            "on-surface-variant": "#bccac1",
+            "tertiary-fixed-dim": "#ffb3ad",
+            "on-primary-fixed": "#002115",
+            "on-primary-fixed-variant": "#00513a",
+            "secondary-fixed-dim": "#a5d0ba",
+            "on-secondary-fixed": "#002115",
+            "secondary-fixed": "#c0ecd6",
+            "inverse-on-surface": "#313030",
+            "surface-container-lowest": "#0e0e0e",
+            "primary-container": "#26a37a",
+            "on-background": "#e5e2e1",
+            "secondary-container": "#295140",
+            "surface-container-high": "#2a2a2a",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#7e2a27",
+            "on-primary-container": "#003121",
+            "outline": "#87948c",
+            "on-secondary-fixed-variant": "#264e3e",
+            "surface-container-highest": "#353534",
+            "on-tertiary": "#5f1413",
+            "primary-fixed-dim": "#68dbae",
+            "background": "#131313",
+            "on-tertiary-container": "#560d0e",
+            "on-primary": "#003827",
+            "surface-container": "#201f1f",
+            "error": "#ffb4ab",
+            "on-tertiary-fixed": "#410003",
+            "error-container": "#93000a",
+            "primary-fixed": "#86f8c9",
+            "on-error": "#690005",
+            "surface-bright": "#3a3939",
+            "primary": "#68dbae",
+            "surface": "#131313",
+            "tertiary-container": "#db726b",
+            "surface-dim": "#131313",
+            "inverse-primary": "#006c4e",
+            "on-secondary": "#0d3728",
+            "tertiary-fixed": "#ffdad6",
+            "surface-tint": "#68dbae"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .teal-gradient {
+      background: linear-gradient(135deg, #68dbae 0%, #26a37a 100%);
+    }
+    .ghost-border {
+      border: 1px solid rgba(61, 73, 67, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-background font-body text-on-surface min-h-screen flex flex-col items-center justify-center selection:bg-primary selection:text-on-primary">
+<!-- Logo Section -->
+<div class="mb-12">
+<h1 class="font-headline font-extrabold text-2xl tracking-tighter text-on-surface">StackFlow</h1>
+</div>
+<!-- Onboarding Card Container -->
+<main class="w-full max-w-[440px] px-6">
+<!-- Progress Indicator -->
+<div class="flex gap-2 mb-10 px-1">
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-primary"></div>
+<div class="h-1 flex-1 rounded-full bg-surface-container-high"></div>
+</div>
+<!-- Main Card -->
+<section class="bg-surface-container rounded-xl p-8 shadow-2xl relative overflow-hidden">
+<!-- Atmospheric Depth Background Element -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 blur-[80px] rounded-full"></div>
+<div class="relative z-10">
+<header class="mb-8">
+<h2 class="font-headline text-2xl font-bold tracking-tight text-on-surface mb-2">Invite your team</h2>
+<p class="text-on-surface-variant text-sm">Add colleagues now, or do it later.</p>
+</header>
+<!-- Form Section -->
+<div class="space-y-6">
+<div class="flex gap-2">
+<div class="flex-1 group">
+<label class="sr-only" for="email-input">Colleague's email</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-1 focus:ring-primary/40 transition-all text-sm" id="email-input" placeholder="colleague@company.com" type="email"/>
+</div>
+<button class="bg-surface-bright hover:bg-surface-variant text-on-surface px-5 py-3 rounded-lg font-medium text-sm transition-colors duration-200">
+              Add
+            </button>
+</div>
+<!-- Email Chips -->
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full ghost-border group">
+<span class="text-xs text-on-surface-variant">alice@company.com</span>
+<button class="flex items-center justify-center text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full ghost-border group">
+<span class="text-xs text-on-surface-variant">bob@company.com</span>
+<button class="flex items-center justify-center text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-4 flex flex-col gap-4">
+<button class="teal-gradient text-on-primary-container font-semibold py-3.5 rounded-lg w-full shadow-lg shadow-primary/10 hover:shadow-primary/20 active:scale-[0.98] transition-all duration-200 text-sm">
+              Send invites &amp; continue
+            </button>
+<button class="text-on-surface-variant hover:text-on-surface text-sm font-medium transition-colors duration-200 py-1">
+              Skip for now
+            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Support/Contextual Footer -->
+<footer class="mt-12 text-center">
+<p class="text-on-surface-variant/40 text-[11px] uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+        Secure encrypted workspace
+      </p>
+</footer>
+</main>
+</body></html>

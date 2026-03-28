@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#690005",
+              "surface-container-highest": "#353534",
+              "tertiary-container": "#db726b",
+              "primary-fixed-dim": "#68dbae",
+              "secondary-container": "#295140",
+              "on-secondary-fixed-variant": "#264e3e",
+              "surface-tint": "#68dbae",
+              "secondary": "#a5d0ba",
+              "on-tertiary-fixed": "#410003",
+              "surface-container-lowest": "#0e0e0e",
+              "surface-container": "#201f1f",
+              "on-secondary-fixed": "#002115",
+              "secondary-fixed-dim": "#a5d0ba",
+              "primary-container": "#26a37a",
+              "on-secondary": "#0d3728",
+              "on-primary-container": "#003121",
+              "surface-container-high": "#2a2a2a",
+              "on-tertiary-fixed-variant": "#7e2a27",
+              "tertiary": "#ffb3ad",
+              "error-container": "#93000a",
+              "surface": "#131313",
+              "outline": "#87948c",
+              "on-primary-fixed": "#002115",
+              "on-tertiary-container": "#560d0e",
+              "on-primary": "#003827",
+              "on-secondary-container": "#97c2ac",
+              "on-error-container": "#ffdad6",
+              "primary-fixed": "#86f8c9",
+              "inverse-surface": "#e5e2e1",
+              "inverse-on-surface": "#313030",
+              "on-tertiary": "#5f1413",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "error": "#ffb4ab",
+              "surface-dim": "#131313",
+              "surface-container-low": "#1c1b1b",
+              "inverse-primary": "#006c4e",
+              "surface-variant": "#353534",
+              "on-surface": "#e5e2e1",
+              "secondary-fixed": "#c0ecd6",
+              "outline-variant": "#3d4943",
+              "background": "#131313",
+              "on-surface-variant": "#bccac1",
+              "on-background": "#e5e2e1",
+              "surface-bright": "#3a3939",
+              "primary": "#68dbae",
+              "tertiary-fixed": "#ffdad6",
+              "on-primary-fixed-variant": "#00513a"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .bg-primary-gradient {
+        background: linear-gradient(135deg, #68dbae 0%, #26a37a 100%);
+      }
+      .custom-shadow {
+        box-shadow: 0px 8px 32px rgba(229, 226, 225, 0.04);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container/30">
+<!-- Top Navigation Anchor -->
+<nav class="fixed top-0 w-full bg-[#131313] flex justify-center items-center h-16 px-6 w-full z-50">
+<div class="max-w-7xl w-full flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#1D9E75]" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="font-manrope text-lg font-bold text-[#E5E2E1] tracking-tight">StackFlow</span>
+</div>
+<div class="font-manrope text-sm tracking-tight text-[#BCCAC1]">
+                Sent by Acme Corp
+            </div>
+</div>
+</nav>
+<main class="min-h-screen pt-24 pb-12 flex flex-col items-center px-4">
+<!-- Task Completion Canvas -->
+<div class="w-full max-w-[480px] space-y-8">
+<!-- Main Content Card -->
+<div class="bg-surface-container rounded-xl p-8 custom-shadow relative overflow-hidden">
+<!-- Decorative Atmospheric Depth Glow -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 blur-[80px] rounded-full"></div>
+<div class="relative z-10 space-y-6">
+<!-- Badge Section -->
+<div class="flex">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'wght' 700;">notification_important</span>
+                            Action Required
+                        </span>
+</div>
+<!-- Header Content -->
+<div class="space-y-2">
+<h1 class="font-headline text-3xl font-extrabold text-on-surface tracking-tight leading-tight">
+                            Submit signed contract
+                        </h1>
+<p class="text-on-surface-variant font-medium flex items-center gap-2">
+                            From Sam Johnson <span class="text-outline/40 text-xs">•</span> <span class="text-on-surface">Acme Corp</span>
+</p>
+</div>
+<!-- Status/Due Date Recess -->
+<div class="bg-surface-container-lowest rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">calendar_clock</span>
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider font-bold">Due Date</span>
+<span class="text-tertiary font-semibold text-sm">October 24, 2023</span>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/20"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-xs font-medium text-on-surface-variant">Encrypted</span>
+</div>
+</div>
+<!-- Instructions -->
+<div class="space-y-3">
+<p class="text-on-surface-variant leading-relaxed text-sm">
+                            Please review the attached Master Services Agreement (MSA) for the Q4 Enterprise Expansion project. Once reviewed, upload the signed version of Exhibit B and Exhibit C below.
+                        </p>
+</div>
+<!-- Note Entry Area -->
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-widest px-1" for="notes">Internal Notes (Optional)</label>
+<textarea class="w-full bg-surface-container-lowest border-0 ring-1 ring-outline-variant/10 rounded-lg p-4 text-sm text-on-surface focus:ring-primary/40 focus:outline-none transition-all placeholder:text-outline/40" id="notes" placeholder="Add a comment for the team..." rows="3"></textarea>
+</div>
+<!-- Action Section -->
+<div class="pt-4 space-y-4">
+<button class="w-full h-12 bg-primary-gradient text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:shadow-[0px_0px_15px_-5px_#86f8c9] transition-all group">
+                            Mark as complete
+                            <span class="material-symbols-outlined text-xl group-hover:translate-x-0.5 transition-transform">check_circle</span>
+</button>
+<button class="w-full text-sm font-medium text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 py-2 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Download original document
+                        </button>
+</div>
+</div>
+</div>
+<!-- Contextual Information -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-xl space-y-2">
+<span class="material-symbols-outlined text-primary text-xl">verified_user</span>
+<h3 class="text-xs font-bold text-on-surface tracking-tight">Enterprise Grade</h3>
+<p class="text-[11px] text-on-surface-variant leading-normal">SOC2 Type II compliant processing for all document completions.</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl space-y-2">
+<span class="material-symbols-outlined text-primary text-xl">history</span>
+<h3 class="text-xs font-bold text-on-surface tracking-tight">Audit Trail</h3>
+<p class="text-[11px] text-on-surface-variant leading-normal">Every action is timestamped and recorded for compliance history.</p>
+</div>
+</div>
+<!-- Footer / Privacy -->
+<footer class="text-center pt-4 space-y-2">
+<p class="text-[10px] text-on-surface-variant/60 max-w-[320px] mx-auto leading-relaxed">
+                    This task is governed by the Acme Corp Master Privacy Policy. Your data is encrypted at rest and in transit.
+                </p>
+<div class="flex items-center justify-center gap-4 pt-2">
+<a class="text-[10px] text-outline hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+<span class="w-1 h-1 bg-outline-variant/40 rounded-full"></span>
+<a class="text-[10px] text-outline hover:text-on-surface transition-colors" href="#">Support Center</a>
+</div>
+</footer>
+</div>
+</main>
+<!-- Visual Texture Overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/asfalt-light.png')]"></div>
+</body></html>

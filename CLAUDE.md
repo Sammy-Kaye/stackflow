@@ -204,7 +204,7 @@ D:\My Projects\Stackflow\
 
 **Workflow** — the template blueprint
 ```
-Fields: Id, Name, Description, WorkspaceId, IsActive, CreatedAt, UpdatedAt
+Fields: Id, Name, Description, WorkspaceId, Category (string, nullable), IsActive, CreatedAt, UpdatedAt
 Contains: collection of WorkflowTask templates
 ```
 
@@ -620,22 +620,28 @@ docker compose up -d               # start all services
 
 ### Phase 1 — Core engine + drag & drop builder (Active)
 
-| Feature | Status |
-|---|---|
-| Project scaffold | Not started |
-| Domain entities | Not started |
-| EF Core DbContext + migrations | Not started |
-| Repository interfaces + implementations | Not started |
-| Custom mediator + pipeline behaviors | Not started |
-| Workflow CRUD (templates) | Not started |
-| WorkflowState spawn | Not started |
-| WorkflowTask execution | Not started |
-| Mid-process editing | Not started |
-| Audit trail | Not started |
-| React Flow builder UI | Not started |
-| Template library UI | Not started |
-| My Tasks view | Not started |
-| Active Workflows board | Not started |
+> Granular deliverables, API contracts, and definitions of done for each feature are in `docs/PHASE1-BUILD-PLAN.md`.
+
+| # | Feature | Backend | Frontend | PR Reviewed | Manually Tested | Done |
+|---|---|---|---|---|---|---|
+| 1 | Project Scaffold | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 2 | Dev Auth Stub | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 3 | Domain Entities + DB | ⬜ | — | ⬜ | ⬜ | ⬜ |
+| 4 | Repository Layer | ⬜ | — | ⬜ | ⬜ | ⬜ |
+| 5 | Custom Mediator + Pipeline | ⬜ | — | ⬜ | ⬜ | ⬜ |
+| 6 | App Shell + Routing | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 7 | Landing Page | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 8 | Workflow CRUD (Templates) | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 9 | Workflow Builder UI | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 10 | Template Library | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 11 | WorkflowState Spawn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 12 | WorkflowTask Execution + Audit Trail | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 13 | My Tasks Dashboard | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 14 | Task Detail Page | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 15 | Active Workflows Board | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 16 | Workflow Instance Detail | — | ⬜ | ⬜ | ⬜ | ⬜ |
+
+Legend: ⬜ Not started · ✅ Complete · — Not applicable for this feature
 
 ### Phase 2 — Auth, notifications, approvals, file attachments (Not started)
 

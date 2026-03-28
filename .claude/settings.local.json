@@ -6,7 +6,8 @@
       "mcp__postgres__query",
       "Bash(find 'D:/My Projects/Stackflow' -name *.html)",
       "Bash(powershell -File:*)",
-      "mcp__stitch__list_projects"
+      "mcp__stitch__list_projects",
+      "Bash(find 'D:/My Projects/Stackflow/web-frontend/src' -type f -not -path */design-reference/*)"
     ]
   }
 }
