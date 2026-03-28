@@ -1,0 +1,6 @@
+@StackFlow.Api_HostAddress = http://localhost:5151
+
+GET {{StackFlow.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -494,7 +494,7 @@ useEffect(() => {
 Stitch design exports live in `web-frontend/src/design-reference/` and are **read-only**.
 When a `DESIGN.md` exists for a screen, the Frontend Agent builds to match it.
 The `.html` archive files are reference only — never copy-paste their HTML.
-shadcn/ui New York style is the component library for all production components.
+shadcn/ui base-nova style is the component library for all production components. (shadcn CLI v4 replaced "new-york" with "base-nova" — these are equivalent.)
 
 ### Frontend Naming Conventions
 
@@ -604,7 +604,7 @@ docker compose up -d               # start all services
 |---|---|
 | Framework | React 19 + TypeScript |
 | Build tool | Vite |
-| Components | shadcn/ui — New York style |
+| Components | shadcn/ui — base-nova style |
 | Workflow canvas | React Flow |
 | Server state | React Query (TanStack Query) |
 | Client state | Redux Toolkit (auth + UI only) |
@@ -624,7 +624,7 @@ docker compose up -d               # start all services
 
 | # | Feature | Backend | Frontend | PR Reviewed | Manually Tested | Done |
 |---|---|---|---|---|---|---|
-| 1 | Project Scaffold | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 1 | Project Scaffold | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 2 | Dev Auth Stub | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 | 3 | Domain Entities + DB | ⬜ | — | ⬜ | ⬜ | ⬜ |
 | 4 | Repository Layer | ⬜ | — | ⬜ | ⬜ | ⬜ |
