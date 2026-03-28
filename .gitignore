@@ -1,0 +1,27 @@
+# Claude Code worktrees (temporary agent isolation branches — never commit)
+.claude/worktrees/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.local
+appsettings.Development.json
+
+# Node / Frontend
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+
+# Secrets
+*.pem
+*.key
+secrets.json
+
+# OS
+.DS_Store
+Thumbs.db
