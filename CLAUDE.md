@@ -200,6 +200,19 @@ D:\My Projects\Stackflow\
 **The fundamental rule:** Templates are immutable blueprints. Instances are live executions.
 **Never conflate template data with instance data.**
 
+### WellKnownIds
+
+Fixed GUIDs for system-seeded entities, defined in `StackFlow.Domain/Constants/WellKnownIds.cs`.
+Use these constants wherever seed entities are referenced in code — never hardcode the GUID literals.
+
+```
+DemoWorkspaceId   = 00000000-0000-0000-0000-000000000001  (demo workspace shown in UI)
+GlobalWorkspaceId = 00000000-0000-0000-0000-000000000002  (system workspace for starter templates — never shown in UI)
+```
+
+The three seeded workflow templates (Employee Onboarding, Purchase Approval, Client Offboarding)
+live under `GlobalWorkspaceId`.
+
 ### Template Level (reusable definitions)
 
 **Workflow** — the template blueprint

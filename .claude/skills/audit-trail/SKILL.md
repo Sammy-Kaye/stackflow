@@ -1,10 +1,9 @@
 ---
 name: audit-trail
 description: >
-  Enforce StackFlow audit trail requirements. Auto-load when writing any command
-  handler that mutates WorkflowState or WorkflowTaskState. Provides the exact
-  audit entry pattern, field requirements, and transaction rules. Every state
-  mutation must produce an audit entry — no exceptions.
+  Enforce StackFlow audit trail requirements. Loaded once by backend-agent before
+  building any state-mutating handler. Do not auto-load — load explicitly when
+  the feature brief includes WorkflowState or WorkflowTaskState mutations.
 allowed-tools: Read, Write, Edit
 ---
 

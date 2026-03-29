@@ -82,9 +82,57 @@ the surrounding pieces don't break.
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. Re-reading it doubles context cost for no gain.
+If you need to verify a specific pattern, grep for the keyword — don't read the whole file.
+
+**RULE: Grep before you read.**
+Never open a file cold. Grep for the class or function first, note the file and line,
+then read only the relevant section using `offset` + `limit` parameters.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | Feature Brief — sections: Domain Entities, Commands/Queries, API Contract only |
+| **LOAD** | Specific source files identified by grep (never cold-read whole directories) |
+| **DO NOT** | Read CLAUDE.md — already in context |
+| **DO NOT** | Read frontend files (.ts, .tsx) |
+| **DO NOT** | Read docs or test files |
+| **DO NOT** | Read the full Feature Brief when only one section is needed |
+| **GREP FIRST** | Existing entities before creating new ones |
+| **GREP FIRST** | Repository interfaces before writing new ones |
+| **GREP FIRST** | Existing migration files to check naming sequence |
+| **SKILL: Load once** | `stackflow-domain` — at session start |
+| **SKILL: Load once** | `result-pattern` — at session start |
+| **SKILL: Load once** | `audit-trail` — before Step 2e (handlers) if feature mutates WorkflowState or WorkflowTaskState |
+| **SKILL: Load once** | `ef-migration` — at Step 3c (migration), just before running dotnet ef |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Any implementation decision covered by CLAUDE.md patterns
+- File naming, folder placement, class naming, method signatures
+- Migration creation and SQL review (create it, read the SQL, proceed)
+- Adding packages already used elsewhere in the project
+- Whether to add a field, validator rule, or repository method the Feature Brief requires
+- DI registration of new services
+
+**Stop and tell Samuel only when:**
+- The Feature Brief is missing information needed to write a handler (not in spec, not inferable)
+- The API contract has two plausible interpretations that produce different response shapes
+- A new domain entity or field is needed that is not in CLAUDE.md and not in the Feature Brief
+
+**When your work is complete, tell Samuel:**
+> ✅ Backend complete for **[Feature Name]**. Say: **"Review this: [Feature Name]"** to start the PR review.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md + the Feature Brief, then say one of:
+Samuel will provide the Feature Brief, then say one of:
 
 | Command | What you do |
 |---|---|

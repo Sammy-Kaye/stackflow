@@ -157,6 +157,24 @@ No Google OAuth. Those are Phase 2.
 with the first migration applied. This is the data foundation every feature after this reads
 from and writes to.
 
+### Reserved workspace GUIDs
+
+Two workspace rows are seeded as system records. These GUIDs are constants — they must never
+change, must never be generated at runtime, and must be defined as static readonly fields in
+a `WellKnownIds` or `SeedData` static class so every feature that needs them can reference
+the same value without magic strings.
+
+| GUID | Name | Purpose |
+|---|---|---|
+| `00000000-0000-0000-0000-000000000001` | Demo Workspace | The default workspace for the Phase 1 demo user. Shown in the UI. |
+| `00000000-0000-0000-0000-000000000002` | Global | System workspace that owns the starter workflow templates. Never shown in the UI. Never used as a real workspace. |
+
+**The Global workspace is a system record only.** It exists so that `Workflow.WorkspaceId`
+can be non-nullable (`Guid`, not `Guid?`) throughout the entire codebase, while still
+distinguishing starter templates from user-created workflows. Nothing in the application
+creates new workflows under this workspace, presents it in dropdowns, or allows it to be
+selected or deleted.
+
 ### Backend deliverables
 
 **Entities in `StackFlow.Domain/Models/`:**
@@ -164,8 +182,11 @@ from and writes to.
 - `Workspace` — `Id (Guid)`, `Name`, `CreatedAt`
 - `User` — `Id (Guid)`, `WorkspaceId`, `Email`, `FullName`, `Role (enum)`, `CreatedAt`
   - Role enum: `Admin | Member`
-- `Workflow` — `Id (Guid)`, `WorkspaceId`, `Name`, `Description`, `IsActive`, `CreatedAt`,
-  `UpdatedAt`
+- `Workflow` — `Id (Guid)`, `WorkspaceId (Guid, non-nullable)`, `Name`, `Description`,
+  `IsActive`, `CreatedAt`, `UpdatedAt`
+  - Note: `WorkspaceId` is non-nullable. Starter templates use the Global workspace GUID
+    (`00000000-0000-0000-0000-000000000002`) as their WorkspaceId. There is no null
+    WorkspaceId anywhere in the schema.
 - `WorkflowTask` — `Id (Guid)`, `WorkflowId`, `Title`, `Description`, `AssigneeType (enum)`,
   `DefaultAssignedToEmail`, `OrderIndex`, `DueAtOffsetDays`, `NodeType (enum)`,
   `ConditionConfig (string, nullable)`, `ParentTaskId (Guid, nullable)`
@@ -177,7 +198,7 @@ from and writes to.
   - Status enum: `InProgress | Completed | Cancelled`
   - ContextType enum: `Standalone | Group`
 - `WorkflowTaskState` — `Id (Guid)`, `WorkflowStateId`, `WorkflowTaskId`, `Status (enum)`,
-  `AssignedToEmail`, `AssignedToUserId (Guid, nullable)`, `DueDate (nullable)`, 
+  `AssignedToEmail`, `AssignedToUserId (Guid, nullable)`, `DueDate (nullable)`,
   `CompletionToken (string, nullable)`, `TokenExpiresAt (nullable)`, `IsTokenUsed (bool)`,
   `CompletionNotes (string, nullable)`, `DeclineReason (string, nullable)`, `Priority (enum)`
   - Status enum: `Pending | InProgress | Completed | Declined | Expired | Skipped`
@@ -203,19 +224,33 @@ from and writes to.
 
 **Seeding in `AppDbContext.OnModelCreating`:**
 
-- Demo workspace seeded: `id: "00000000-0000-0000-0000-000000000001"`, name: "Demo Workspace"
-- Three starter workflow templates seeded (read-only, WorkspaceId: null = global):
+All seed data is defined using the reserved GUIDs from the `WellKnownIds` static class.
+
+- **Global workspace seeded:**
+  `id: "00000000-0000-0000-0000-000000000002"`, name: "Global", createdAt: fixed UTC date.
+  This row exists only to satisfy the non-nullable `WorkspaceId` foreign key on global
+  workflow templates. It is never surfaced in the application UI.
+
+- **Demo workspace seeded:**
+  `id: "00000000-0000-0000-0000-000000000001"`, name: "Demo Workspace", createdAt: fixed UTC date.
+
+- **Three starter workflow templates seeded** with `WorkspaceId: "00000000-0000-0000-0000-000000000002"` (the Global workspace):
   1. Employee Onboarding — 6 task nodes
   2. Purchase Approval — 4 nodes (includes one Approval node)
   3. Client Offboarding — 5 task nodes
-- These seeded templates have `IsActive: true` and cannot be deleted (enforced in the
-  delete handler by checking WorkspaceId is null)
+  - These seeded templates have `IsActive: true`.
+  - They are identified as global by their `WorkspaceId` matching the Global workspace GUID.
+  - They cannot be deleted — enforced in the delete handler by checking
+    `workflow.WorkspaceId == WellKnownIds.GlobalWorkspaceId`.
 
 ### Definition of done
 
 - `dotnet ef database update` applies the migration without error
 - All tables exist in PostgreSQL with correct columns, types, and constraints
-- Seeded demo workspace and three starter templates are present in the database
+- `Workflow.WorkspaceId` column is non-nullable in the database
+- Both the Global workspace row and the Demo workspace row are present in the `Workspaces` table
+- Three starter workflow templates are present in the `Workflows` table with `WorkspaceId`
+  set to `00000000-0000-0000-0000-000000000002`
 - `dotnet build` passes with zero warnings
 
 ---
@@ -444,15 +479,20 @@ the blueprints — no live execution yet. Full-stack feature: API first, then th
   - Replaces task list (delete old tasks, insert new ones) — simpler than diffing in Phase 1
   - Updates `UpdatedAt`
 - `DeleteWorkflowCommand` — `Id`. Returns `Result`.
-  - Validates: Workflow must exist, must belong to caller's workspace, must not be a seeded
-    global template (`WorkspaceId == null`)
+  - Validates: Workflow must exist, must belong to caller's workspace, must not be a global
+    template. A workflow is a global template when its `WorkspaceId` equals the reserved
+    Global workspace GUID (`WellKnownIds.GlobalWorkspaceId` =
+    `00000000-0000-0000-0000-000000000002`). Attempting to delete a global template returns
+    `Result.Fail("Global templates cannot be deleted")`.
   - Hard delete — removes workflow and all its `WorkflowTask` records
 
 **Queries:**
 
 - `GetWorkflowByIdQuery` — `Id`. Returns `Result<WorkflowDto>` (includes tasks).
 - `GetWorkflowsQuery` — `WorkspaceId`. Returns `Result<List<WorkflowSummaryDto>>`.
-  Includes: global templates (WorkspaceId null) + workspace's own workflows.
+  Includes: global templates (those whose `WorkspaceId == WellKnownIds.GlobalWorkspaceId`)
+  plus the workspace's own workflows. The Global workspace row itself is never returned as
+  a workspace option anywhere in the application.
 
 **DTOs:**
 
@@ -460,7 +500,7 @@ the blueprints — no live execution yet. Full-stack feature: API first, then th
   `Tasks (List<WorkflowTaskDto>)`
 - `WorkflowSummaryDto` — `Id`, `Name`, `Description`, `IsActive`, `TaskCount`,
   `ActiveInstanceCount` (count of WorkflowStates with Status=InProgress), `CreatedAt`,
-  `IsGlobal (bool)`
+  `IsGlobal (bool)` — derived by comparing `WorkspaceId == WellKnownIds.GlobalWorkspaceId`
 - `WorkflowTaskDto` — all WorkflowTask fields
 - `CreateWorkflowTaskDto` — `Title`, `Description`, `AssigneeType`, `DefaultAssignedToEmail`,
   `OrderIndex`, `DueAtOffsetDays`, `NodeType`, `ConditionConfig`, `ParentTaskId`
@@ -679,8 +719,9 @@ the moment a workflow blueprint becomes a real running process.
 **Command: `SpawnWorkflowCommand`**
 
 - Inputs: `WorkflowId (Guid)`, `WorkspaceId (Guid)`, `ActorEmail (string)`
-- Validates: Workflow must exist, must be active (`IsActive: true`), must belong to workspace
-  or be a global template
+- Validates: Workflow must exist, must be active (`IsActive: true`), and must either belong
+  to the caller's workspace or be a global template (i.e.
+  `workflow.WorkspaceId == WellKnownIds.GlobalWorkspaceId`)
 - Creates a `WorkflowState` with `Status: InProgress`, `StartedAt: UtcNow`,
   `ReferenceNumber` generated as `WF-{YYYYMMDD}-{4-char random hex}`
 - For each `WorkflowTask` in the workflow, creates a `WorkflowTaskState` with:

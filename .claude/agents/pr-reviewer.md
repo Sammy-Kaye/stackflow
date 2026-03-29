@@ -75,10 +75,49 @@ so the correct builder can fix them.**
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. CLAUDE.md is the standard you review against —
+it is already available. Do not re-read it.
+
+**RULE: Read only the files in scope.**
+Get the file list from Samuel's message or the builder's completion summary.
+Do not open files outside that list.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | Feature Brief (full read — scope verification justifies it) |
+| **LOAD** | Only the specific files changed (from Samuel's message or builder summary) |
+| **DO NOT** | Read CLAUDE.md — already in context |
+| **DO NOT** | Read files outside the feature's scope |
+| **DO NOT** | Read test files unless testing quality is explicitly in scope |
+| **GREP** | Specific patterns to verify compliance (e.g. `throw new` to check Result pattern usage) |
+| **SKILL: Load once** | `pr-checklist` — at session start |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Checking every checklist item — work through them all without pausing
+- Grepping for pattern violations — do it without announcing it first
+- Noting optional suggestions — include them in the report, don't ask first
+
+**Stop and tell Samuel only when:**
+- A required change is so significant you cannot determine if it needs a feature redesign vs a targeted fix
+
+**When your work is complete, tell Samuel:**
+> ✅ Review complete for **[Feature Name]**.
+> - If approved: Say **"Document this: [Feature Name]"** and **"Write tests for: [Feature Name]"** (run both in parallel).
+> - If changes required: Return to **[Backend / Frontend Agent]** with the required changes listed above.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md + the Feature Brief + the completed code or diff.
-Then he will say: **"Review this"**.
+Samuel will provide the Feature Brief + the completed code or diff.
+Then he will say: **"Review this"**. CLAUDE.md is already in your context — do not re-read it.
 
 You read everything provided, run both checklists, and produce the review report.
 

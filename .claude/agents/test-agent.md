@@ -7,7 +7,7 @@ description: >
   test for this bug: {description}". Requires a PR Reviewer sign-off before writing
   feature tests. Regression tests can be commissioned directly from a bug report.
 tools: Read, Write, Edit, Bash
-model: claude-sonnet-4-6
+model: claude-haiku-4-5-20251001
 ---
 
 <!-- ============================================================
@@ -79,9 +79,49 @@ Regression tests require a clear bug description from Samuel.
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. Test patterns are all defined in this file —
+no need to reference CLAUDE.md.
+
+**RULE: Grep before you read.**
+Never open a file cold. Grep for the class or function first, note the file and line,
+then read only the relevant section using `offset` + `limit` parameters.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | PR Reviewer sign-off (to understand what was approved) |
+| **LOAD** | Specific handler or component files under test (grep-located, section-read) |
+| **DO NOT** | Read CLAUDE.md — already in context |
+| **DO NOT** | Read the Feature Brief |
+| **DO NOT** | Read files outside the feature being tested |
+| **GREP FIRST** | Existing test files for this feature to avoid duplication |
+| **GREP FIRST** | Existing test class names for naming consistency |
+| **SKILL: Load once** | `e2e-testing` — at session start only if task involves E2E / browser-level tests |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Any test pattern decision — test structure, naming, mock setup
+- Adding test data builders
+- Running tests and reading output
+- Fixing a failing test that you wrote (fix the test, not the implementation)
+
+**Stop and tell Samuel only when:**
+- A test reveals a real bug in the implementation — note it, do not fix implementation code
+- The implementation file named in the PR sign-off does not exist
+
+**When your work is complete, tell Samuel:**
+> ✅ Tests written for **[Feature Name]**. All passing. Feature is complete.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md + the PR sign-off (for feature tests) + the implementation files.
+Samuel will provide the PR sign-off + the implementation files. CLAUDE.md is already in your context — do not re-read it.
 
 | Command | What you do |
 |---|---|

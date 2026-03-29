@@ -89,9 +89,52 @@ If a second issue surfaces during a session, flag it and stop — do not address
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. Only grep a specific rule if you are diagnosing
+an architecture violation — do not read the whole file.
+
+**RULE: Grep first, always. Read nothing cold.**
+Locate the bug before reading anything. Understand scope (how many files?) before opening
+any file. Never read a whole layer to find one method.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | Only files directly related to the reported bug |
+| **DO NOT** | Read CLAUDE.md — already in context (grep specific rules only if needed) |
+| **DO NOT** | Read Feature Briefs |
+| **DO NOT** | Read test files unless the bug is in tests |
+| **DO NOT** | Read unrelated modules or layers |
+| **GREP FIRST** | Locate the exact file and line before reading anything |
+| **GREP FIRST** | Understand how many files are in scope before opening any |
+| **GREP FIRST** | Never read a whole layer to find one method — grep the method name |
+| **SKILL: Load once** | `stackflow-domain` — at session start |
+| **SKILL: Load once** | `result-pattern` — only if the bug is in a handler |
+| **SKILL: Load once** | `audit-trail` — only if the bug is a missing or incorrect audit entry |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Grepping and reading files to locate the bug
+- Applying a fix that is clearly within the existing pattern (same file, same layer, same conventions)
+- Updating a test that broke directly because of the fix
+
+**Stop and tell Samuel only when:**
+- The fix requires changing more than 3 files (produce a Refactor Plan first)
+- The fix requires changing the API contract (produce a Pivot Brief first)
+- You find a CLAUDE.md violation unrelated to the current bug — note it, do not fix it in this session
+
+**When your work is complete, tell Samuel:**
+> ✅ Fix applied for **[bug]**. Files changed: [list]. Say **"Write a regression test for: [bug]"** to lock it in.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md + the relevant code or error output, then use one of:
+Samuel will provide the relevant code or error output, then use one of:
 
 | Command | Mode |
 |---|---|

@@ -83,9 +83,55 @@ Agent's completion summary is the ground truth. Always build to that.
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. Re-reading it doubles context cost for no gain.
+If you need to verify a specific pattern, grep for the keyword — don't read the whole file.
+
+**RULE: Grep before you read.**
+Never open a file cold. Grep for the component name or hook first, note the file and line,
+then read only the relevant section using `offset` + `limit` parameters.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | Feature Brief — API Contract section only (not the whole brief) |
+| **LOAD** | `design-reference/DESIGN.md` for the specific screen being built (if it exists) |
+| **DO NOT** | Read CLAUDE.md — already in context |
+| **DO NOT** | Read backend source files (.cs) |
+| **DO NOT** | Read test files |
+| **DO NOT** | Read `.html` design archive files — visual reference only, never copy |
+| **GREP FIRST** | Existing hooks before writing new ones |
+| **GREP FIRST** | Redux slice structure before adding to it |
+| **GREP FIRST** | Existing component names to avoid duplication |
+| **SKILL: Load once** | `stackflow-design` — at session start, before writing any component |
+| **SKILL: Load once** | `stackflow-domain` — at session start |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Any implementation decision covered by CLAUDE.md patterns
+- Component structure, prop naming, file placement within the module folder
+- Choosing between shadcn/ui primitives (use the one that fits the design)
+- Loading skeleton implementation details
+- Form validation message wording
+- Whether to use a toast or inline error (follow UX standards in CLAUDE.md)
+
+**Stop and tell Samuel only when:**
+- The backend completion summary mentions an endpoint shape that differs from the Feature Brief contract
+- A screen has no DESIGN.md and the layout intent is genuinely ambiguous
+- A new Redux slice field is needed (auth/UI state only — confirm before adding)
+
+**When your work is complete, tell Samuel:**
+> ✅ Frontend complete for **[Feature Name]**. Say: **"Review this: [Feature Name]"** to start the PR review.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md + the Feature Brief + backend confirmation, then say:
+Samuel will provide the Feature Brief + backend confirmation, then say:
 
 | Command | What you do |
 |---|---|

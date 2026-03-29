@@ -1,10 +1,9 @@
 ---
 name: ef-migration
 description: >
-  Guide EF Core migration creation and validation for StackFlow. Auto-load when
-  any backend work adds, modifies, or removes database entities, fields, or
-  relationships. Covers Fluent API configuration, migration commands, SQL review,
-  and rollback verification. Never accept a migration without reading the generated SQL.
+  Guide EF Core migration creation and validation for StackFlow. Loaded once by
+  backend-agent at Step 3 (Infrastructure layer) when a migration is needed.
+  Do not auto-load — load explicitly just before running dotnet ef migrations add.
 allowed-tools: Read, Write, Edit, Bash
 ---
 

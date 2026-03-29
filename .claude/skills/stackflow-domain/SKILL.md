@@ -1,10 +1,9 @@
 ---
 name: stackflow-domain
 description: >
-  Load the StackFlow domain model. Use whenever working with Workflow,
-  WorkflowTask, WorkflowState, WorkflowTaskState, WorkflowAudit,
-  WorkflowTaskAudit, or any StackFlow entity. Auto-load when any domain
-  entity, field name, or relationship is referenced in a task.
+  Load the StackFlow domain model. Loaded once at session start by
+  backend-agent, frontend-agent, and debug-edit-agent per their Context Budget.
+  Do not auto-load on every entity mention — load explicitly and once per session.
 ---
 
 <!--

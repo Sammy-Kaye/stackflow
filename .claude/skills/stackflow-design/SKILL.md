@@ -1,10 +1,9 @@
 ---
 name: stackflow-design
 description: >
-  Load StackFlow visual design system and screen references. Auto-load when
-  frontend-agent is building any UI component, page, or layout. Enforces the
-  visual spec exported from Google Stitch. Always read the relevant screen
-  reference before writing a single component.
+  Load StackFlow visual design system and screen references. Loaded once at
+  session start by frontend-agent before writing any component. Do not
+  auto-load — load explicitly and once per session.
 allowed-tools: Read
 ---
 

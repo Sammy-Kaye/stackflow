@@ -1,10 +1,9 @@
 ---
 name: pr-checklist
 description: >
-  Run the full StackFlow PR review checklist. Auto-load when the pr-reviewer
-  agent is reviewing a completed feature. Provides the complete backend and
-  frontend review checklist with pass/fail/suggestion marking and the exact
-  report format to produce. Every item must be checked on every review.
+  Run the full StackFlow PR review checklist. Loaded once at session start by
+  pr-reviewer. Do not auto-load — load explicitly and once at the start of
+  each review session. Every item must be checked on every review.
 allowed-tools: Read, Glob, Grep
 ---
 

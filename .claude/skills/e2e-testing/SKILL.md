@@ -1,10 +1,9 @@
 ---
 name: e2e-testing
 description: >
-  Write and run Playwright E2E tests for StackFlow. Auto-load when test-agent
-  is writing end-to-end tests for any feature, when debug-edit-agent needs to
-  verify a bug fix works in the real browser, or when writing regression tests
-  after Samuel reports a bug from real testing.
+  Write and run Playwright E2E tests for StackFlow. Loaded once at session start
+  by test-agent when writing E2E tests. Do not auto-load — load explicitly when
+  the task specifically involves end-to-end or browser-level tests.
 allowed-tools: Read, Write, Edit, Bash
 ---
 

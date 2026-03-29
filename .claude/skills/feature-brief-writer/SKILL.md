@@ -1,11 +1,9 @@
 ---
 name: feature-brief-writer
 description: >
-  Generate a correctly formatted StackFlow Feature Brief. Auto-load when the
-  feature-provider agent is scoping a feature, or when Samuel says "Brief: {name}",
-  "Start Phase 1", or asks for a feature breakdown. Produces the exact brief
-  structure that backend-agent, frontend-agent, pr-reviewer, test-agent, and
-  docs-agent all depend on downstream.
+  Generate a correctly formatted StackFlow Feature Brief. Loaded once at session
+  start by feature-provider. Do not auto-load — load explicitly and once per
+  session. Produces the exact brief structure all downstream agents depend on.
 allowed-tools: Read, Write
 ---
 

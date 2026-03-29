@@ -14,8 +14,14 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using StackFlow.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ── Infrastructure (DbContext, repositories, messaging) ───────────────────────
+// Feature 3: wires AppDbContext with Npgsql.
+// Feature 4 will add repository registrations to this same extension method.
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // ── Controllers ──────────────────────────────────────────────────────────────
 builder.Services.AddControllers()

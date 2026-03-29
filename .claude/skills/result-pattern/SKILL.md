@@ -2,9 +2,8 @@
 name: result-pattern
 description: >
   Enforce the StackFlow Result pattern for handler return types and error handling.
-  Auto-load when writing or reviewing any command handler, query handler, or
-  controller action. Use when Result<T>, Result.Fail, or error handling is involved.
-  Never throw business exceptions — always return Result.
+  Loaded once at session start by backend-agent. Do not auto-load on every handler
+  mention — load explicitly and once per session. Never throw business exceptions.
 allowed-tools: Read, Write, Edit
 ---
 

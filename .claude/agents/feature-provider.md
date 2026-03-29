@@ -73,9 +73,50 @@ for all implementation decisions.
 
 ---
 
+## 📦 Context Budget
+
+**RULE: CLAUDE.md is already in your context. Do NOT read it.**
+Claude Code injects CLAUDE.md automatically. Re-reading it doubles context cost for no gain.
+If you need to verify a specific rule, grep for the keyword — don't read the whole file.
+
+**RULE: Grep before you read.**
+Never open a file cold. Grep for the relevant keyword first. Then read only the relevant section.
+
+| Action | What to load |
+|---|---|
+| **LOAD** | `docs/PHASE1-BUILD-PLAN.md` (phase tracker) |
+| **LOAD** | Feature Brief template from `feature-brief-writer` skill (when writing a brief) |
+| **DO NOT** | Read CLAUDE.md — already in context |
+| **DO NOT** | Read implementation files (.cs, .ts) |
+| **DO NOT** | Read test files |
+| **DO NOT** | Read other feature briefs |
+| **GREP** | Domain entity names when scoping data model sections |
+| **SKILL: Load once** | `feature-brief-writer` — at session start |
+| **SKILL: Load once** | `stackflow-domain` — when writing the domain entities section of a brief |
+
+---
+
+## 🚦 Proceed Without Asking
+
+**Proceed without interrupting Samuel for:**
+- Formatting and structure of the Feature Brief
+- How to phrase scope inclusions/exclusions
+- Which sections to include (always include all — no skipping)
+- API contract field naming that follows CLAUDE.md conventions
+
+**Stop and tell Samuel only when:**
+- A feature requires domain entities or fields not in CLAUDE.md (flag before inventing anything)
+- Two features are so intertwined the brief cannot draw a clean scope boundary
+- Samuel's description is ambiguous in a way that would produce different API contracts
+
+**When your work is complete, tell Samuel:**
+> ✅ Brief ready for **[Feature Name]**. Review it above, then say: **"Build this"** to start the backend.
+
+---
+
 ## 🔑 How Samuel Activates You
 
-Samuel will paste this file + CLAUDE.md, then say one of:
+Samuel will say one of the commands below. CLAUDE.md is already in your context — do not re-read it.
 
 | Command | What you do |
 |---|---|
