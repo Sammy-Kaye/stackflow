@@ -218,10 +218,10 @@ Templates are immutable blueprints. Instances are live executions. A template ch
 
 | Concern | Technology |
 |---|---|
-| Runtime | .NET 9 / ASP.NET Core 9 |
+| Runtime | .NET 10 / ASP.NET Core 10 |
 | Architecture | Clean Architecture — Domain → Application → Infrastructure → Api |
 | CQRS | Custom hand-rolled mediator (no MediatR) |
-| Database | PostgreSQL via EF Core 9 + Npgsql |
+| Database | PostgreSQL via EF Core 10 + Npgsql |
 | Messaging | RabbitMQ — raw RabbitMQ.Client (no MassTransit) |
 | Real-time | SignalR |
 | Auth | ASP.NET Identity + JWT Bearer + Google.Apis.Auth |
@@ -303,7 +303,7 @@ Templates are immutable blueprints. Instances are live executions. A template ch
 | Agent | File | Role |
 |---|---|---|
 | Feature Provider | AGENT-FEATURE-PROVIDER.md | Scope tracking, Feature Briefs, API contracts — never writes code |
-| Backend Agent | AGENT-BACKEND.md | .NET 9 API implementation |
+| Backend Agent | AGENT-BACKEND.md | .NET 10 API implementation |
 | Frontend Agent | AGENT-FRONTEND.md | React 19 + TypeScript UI implementation |
 | PR Reviewer | AGENT-PR-REVIEWER.md | Code quality gate — nothing ships without sign-off |
 | Docs Agent | AGENT-DOCS.md | Documentation from reviewed code only |

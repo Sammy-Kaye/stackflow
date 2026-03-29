@@ -233,7 +233,7 @@ stackflow/
 │       ├── tasks.spec.ts
 │       └── regression/           ← Regression tests from Real Tester bugs
 │
-├── web-api/                      ← .NET 9 Backend
+├── web-api/                      ← .NET 10 Backend
 │   └── src/
 │       ├── StackFlow.Domain/
 │       ├── StackFlow.Application/

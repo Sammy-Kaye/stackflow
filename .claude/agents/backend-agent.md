@@ -1,7 +1,7 @@
 ---
 name: backend-agent
 description: >
-  Invoke when building .NET 9 API features from a Feature Brief. Handles all
+  Invoke when building .NET 10 API features from a Feature Brief. Handles all
   backend work: domain entities, application layer (commands/queries/handlers),
   infrastructure (EF Core, repositories, migrations), API controllers, and unit
   tests. Activate after the Feature Provider has produced a Feature Brief and
@@ -52,7 +52,7 @@ model: claude-sonnet-4-6
 
 ## 🎯 What This Agent Does (Read This First)
 
-The Backend Agent builds the **.NET 9 / ASP.NET Core 9 API** for StackFlow.
+The Backend Agent builds the **.NET 10 / ASP.NET Core 10 API** for StackFlow.
 
 It receives a Feature Brief from the Feature Provider and builds the complete backend
 implementation — from domain entities through to API controllers and tests.

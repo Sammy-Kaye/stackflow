@@ -1,13 +1,19 @@
 // StackFlow API entry point.
 // This file wires up the ASP.NET Core service container and middleware pipeline.
-// At this stage (Feature 1 — Project Scaffold) only the following are registered:
+// Registered as of Feature 2 (Dev Auth Stub):
 //   - Swagger / OpenAPI
 //   - Health checks
 //   - CORS (allow all origins — dev only; locked down in production)
 //   - JSON serialisation options (camelCase, ignore null)
 //   - Controllers
-// Nothing that does not yet exist (no DbContext, no mediator, no auth) is wired here.
+//   - JWT bearer authentication (reads DevAuth:JwtSecret in Development;
+//     Phase 2 will swap this for the real Jwt:Secret)
+// Nothing that does not yet exist (no DbContext, no mediator) is wired here.
 // Each subsequent feature adds its own registration without modifying this block.
+
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +63,54 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ── JWT Bearer Authentication ─────────────────────────────────────────────────
+// Feature 2 (Dev Auth Stub): reads the signing secret from DevAuth:JwtSecret,
+// which is only present in appsettings.Development.json.
+// Phase 2 (Real Auth): this block will be replaced to read from Jwt:Secret with
+// full issuer/audience validation enabled.
+//
+// The same bearer middleware is used in both phases — only the configuration
+// source changes. Controllers decorated with [Authorize] work immediately.
+//
+// In non-Development environments DevAuth:JwtSecret is absent, so a placeholder
+// key is used. The /api/auth/dev-login endpoint returns 403 in non-Development
+// environments, so tokens signed with the placeholder key are never issued —
+// the bearer middleware simply has no valid tokens to accept.
+var jwtSecret = builder.Configuration["DevAuth:JwtSecret"]
+    ?? "placeholder-key-replaced-by-phase2-real-auth-secret-xx";
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret)),
+
+            // Issuer and audience validation is intentionally relaxed for the dev stub.
+            // Phase 2 will enable these once the real token issuer is established.
+            ValidateIssuer = false,
+            ValidateAudience = false,
+
+            // Enforce token expiry — even the dev stub should expire correctly.
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        // Return a clean JSON error body on 401 instead of an empty response.
+        options.Events = new JwtBearerEvents
+        {
+            OnChallenge = context =>
+            {
+                context.HandleResponse();
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                context.Response.ContentType = "application/json";
+                return context.Response.WriteAsync("{\"error\":\"Unauthorised\"}");
+            }
+        };
+    });
+
 // ── Build ─────────────────────────────────────────────────────────────────────
 var app = builder.Build();
 
@@ -77,8 +131,7 @@ app.UseCors("DevCors");
 
 app.UseRouting();
 
-// Auth middleware is registered here for correctness — no schemes are configured yet.
-// Feature 2 (Dev Auth Stub) and Phase 2 (JWT) will activate these.
+// JWT bearer authentication is active from Feature 2 onward.
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -19,7 +19,7 @@ clone the repository, run `docker compose up -d`, and reach a working API at
 
 ## How it works
 
-The backend is a four-project .NET 9 solution following Clean Architecture. The projects
+The backend is a four-project .NET 10 solution following Clean Architecture. The projects
 are wired with the correct reference graph (Domain has no references; Application references
 Domain; Infrastructure references Application; Api references Infrastructure). `Program.cs`
 registers only what exists at this stage: controllers, Swagger, health checks, CORS, and

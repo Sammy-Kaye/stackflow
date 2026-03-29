@@ -53,7 +53,17 @@
       "Read(//root/**)",
       "Read(//mnt/c/**)",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" test \"/mnt/d/My Projects/Stackflow/web-api/StackFlow.sln\" --logger \"console;verbosity=normal\" 2>&1)",
-      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" test \"D:\\\\\\\\My Projects\\\\\\\\Stackflow\\\\\\\\web-api\\\\\\\\StackFlow.sln\" --logger \"console;verbosity=normal\" 2>&1)"
+      "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" test \"D:\\\\\\\\My Projects\\\\\\\\Stackflow\\\\\\\\web-api\\\\\\\\StackFlow.sln\" --logger \"console;verbosity=normal\" 2>&1)",
+      "Bash(DOTNET=/home/samue/.vscode-server/data/User/globalStorage/ms-dotnettools.vscode-dotnet-runtime/.dotnet/10.0.5~x64~aspnetcore/dotnet)",
+      "Bash(dotnet --version)",
+      "Bash(grep -rn \"\\\\.NET 9\\\\|net9\\\\|ASP\\\\.NET Core 9\\\\|9\\\\.\\\\*\\\\|dotnet-9\\\\|mcr\\\\.microsoft\\\\.com/dotnet.*9\" '/mnt/d/My Projects/Stackflow' --include=*.yml --include=*.yaml --include=Dockerfile* --include=*.json)",
+      "Bash(sed -i 's/\\\\.NET 9 \\\\//\\\\.NET 10 \\\\//g' docker-compose.yml)",
+      "Bash(sed -i 's/Invoke when building \\\\.NET 9 API features/Invoke when building .NET 10 API features/g' .claude/agents/backend-agent.md)",
+      "Bash(grep -rn \"net9\\\\.0\\\\|\\\\.NET 9\\\\|ASP\\\\.NET Core 9\\\\|EF Core 9\\\\|dotnet/sdk:9\\\\|dotnet/aspnet:9\" '/mnt/d/My Projects/Stackflow' --include=*.csproj --include=*.md --include=Dockerfile* --include=*.yml)",
+      "Bash(cd:*)",
+      "Bash(dotnet list:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest:*)"
     ]
   }
 }

@@ -7,7 +7,7 @@ Status: Ready for implementation
 ## What this feature does (plain English)
 
 This feature creates the runnable skeleton of the entire StackFlow system. Before any
-business logic can be written, the physical project structure must exist: four .NET 9
+business logic can be written, the physical project structure must exist: four .NET 10
 class library and web projects wired together in a solution file, a React 19 + TypeScript
 frontend created with Vite, and a Docker Compose file that brings up PostgreSQL, RabbitMQ,
 the API, and the frontend with a single command. When this feature is done, a developer
@@ -19,7 +19,7 @@ receive a 200 OK — proving the entire stack is wired and talking.
 ## Scope — what IS in this brief
 
 - Solution file `StackFlow.sln` at `web-api/`
-- Four .NET 9 projects created with correct project references:
+- Four .NET 10 projects created with correct project references:
   - `StackFlow.Domain` (class library — no dependencies)
   - `StackFlow.Application` (class library — references Domain only)
   - `StackFlow.Infrastructure` (class library — references Application and Domain)

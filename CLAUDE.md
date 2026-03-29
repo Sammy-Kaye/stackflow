@@ -63,7 +63,7 @@ All agent files live in `.claude/agents/`. Claude Code discovers them automatica
 | Agent | File | Role | Tools |
 |---|---|---|---|
 | **feature-provider** | `.claude/agents/feature-provider.md` | Scope controller. Produces Feature Briefs and API Contracts. Never writes code. | Read, Write |
-| **backend-agent** | `.claude/agents/backend-agent.md` | Builds .NET 9 API from Feature Brief. Domain → Application → Infrastructure → API. | Read, Write, Edit, Bash |
+| **backend-agent** | `.claude/agents/backend-agent.md` | Builds .NET 10 API from Feature Brief. Domain → Application → Infrastructure → API. | Read, Write, Edit, Bash |
 | **frontend-agent** | `.claude/agents/frontend-agent.md` | Builds React 19 UI from Feature Brief. Types → Service → Hooks → Components → Pages. | Read, Write, Edit, Bash |
 | **pr-reviewer** | `.claude/agents/pr-reviewer.md` | Quality gate. Reviews completed features. Nothing moves forward without sign-off. | Read, Glob, Grep |
 | **docs-agent** | `.claude/agents/docs-agent.md` | Documents PR-approved features only. Produces API reference + feature summary. | Read, Write |
@@ -157,7 +157,7 @@ D:\My Projects\Stackflow\
 │       ├── stackflow-design/
 │       └── e2e-testing/
 │
-├── web-api/                         ← .NET 9 Backend
+├── web-api/                         ← .NET 10 Backend
 │   ├── src/
 │   │   ├── StackFlow.Domain/        ← Entities, enums. Pure C#. Zero dependencies.
 │   │   ├── StackFlow.Application/   ← Commands, queries, handlers, DTOs, validators
@@ -584,10 +584,10 @@ docker compose up -d               # start all services
 
 | Concern | Technology |
 |---|---|
-| Runtime | .NET 9 / ASP.NET Core 9 |
+| Runtime | .NET 10 / ASP.NET Core 10 |
 | Architecture | Clean Architecture — Domain → Application → Infrastructure → API |
 | CQRS | Custom hand-rolled mediator (no MediatR) |
-| Database | PostgreSQL via EF Core 9 + Npgsql |
+| Database | PostgreSQL via EF Core 10 + Npgsql |
 | ORM config | Fluent API only — no data annotations |
 | Error handling | Result pattern — never throw business exceptions |
 | Validation | FluentValidation — runs in ValidationBehavior pipeline step |
@@ -625,7 +625,7 @@ docker compose up -d               # start all services
 | # | Feature | Backend | Frontend | PR Reviewed | Manually Tested | Done |
 |---|---|---|---|---|---|---|
 | 1 | Project Scaffold | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 2 | Dev Auth Stub | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 2 | Dev Auth Stub | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 3 | Domain Entities + DB | ⬜ | — | ⬜ | ⬜ | ⬜ |
 | 4 | Repository Layer | ⬜ | — | ⬜ | ⬜ | ⬜ |
 | 5 | Custom Mediator + Pipeline | ⬜ | — | ⬜ | ⬜ | ⬜ |

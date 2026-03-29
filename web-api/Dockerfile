@@ -10,7 +10,7 @@
 # The solution and all project files are relative to that context.
 
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /source
 
 # Copy solution file and all project files first.
@@ -39,7 +39,7 @@ RUN dotnet publish src/StackFlow.Api/StackFlow.Api.csproj \
     --output /app/publish
 
 # ── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 
 # Copy published output from the build stage only — no SDK, no source code

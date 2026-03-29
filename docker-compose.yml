@@ -53,7 +53,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── API (.NET 9 / ASP.NET Core) ─────────────────────────────────────────────
+  # ── API (.NET 10 / ASP.NET Core) ─────────────────────────────────────────────
   # The StackFlow backend. Built from ./web-api/Dockerfile.
   # Mapped to localhost:5000 on the host.
   api:
