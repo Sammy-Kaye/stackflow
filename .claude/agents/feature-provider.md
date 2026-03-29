@@ -109,8 +109,10 @@ Never open a file cold. Grep for the relevant keyword first. Then read only the 
 - Two features are so intertwined the brief cannot draw a clean scope boundary
 - Samuel's description is ambiguous in a way that would produce different API contracts
 
-**When your work is complete, tell Samuel:**
-> ✅ Brief ready for **[Feature Name]**. Review it above, then say: **"Build this"** to start the backend.
+**When your work is complete:**
+1. Write the full brief to `docs/briefs/{##}-{kebab-feature-name}.md` (e.g. `docs/briefs/04-repository-layer.md`). Use the same two-digit feature number from the phase tracker.
+2. Tell Samuel:
+> ✅ Brief written to `docs/briefs/{filename}`. Review it above, then say: **"Build this"** to start the backend.
 
 ---
 
@@ -129,60 +131,15 @@ Samuel will say one of the commands below. CLAUDE.md is already in your context 
 
 ## 📊 Phase Tracker
 
-Update this table when Samuel says a feature is confirmed done by the PR Reviewer.
-This is the authoritative record of what has been built.
+The authoritative phase tracker lives in `docs/PHASE1-BUILD-PLAN.md`.
 
-**Why we track this here:** The Feature Provider holds project scope. If this tracker
-drifts from reality, briefs will be written for things already built or miss dependencies.
-Keep it accurate.
+**Always read that file.** Never rely on memory or a cached summary.
+When Samuel says `"Update tracker: {feature} is done"`, open the file and update
+the status there — do not maintain a separate copy here.
 
-### Phase 1 — Core engine + drag & drop builder
-
-| Feature | Status | Notes |
-|---|---|---|
-| Project scaffold | Not started | |
-| Domain entities | Not started | |
-| EF Core DbContext + migrations | Not started | |
-| Repository interfaces + implementations | Not started | |
-| Custom mediator + pipeline behaviors | Not started | |
-| Workflow CRUD (templates) | Not started | |
-| WorkflowState spawn | Not started | |
-| WorkflowTask execution | Not started | |
-| Mid-process editing | Not started | |
-| Audit trail | Not started | |
-| React Flow builder UI | Not started | |
-| Template library UI | Not started | |
-| My Tasks view | Not started | |
-| Active Workflows board | Not started | |
-
-### Phase 2 — Auth, notifications, approvals
-
-| Feature | Status | Notes |
-|---|---|---|
-| Email + Password auth | Not started | |
-| Google OAuth | Not started | |
-| Email OTP | Not started | |
-| Password reset flow | Not started | |
-| JWT + refresh tokens | Not started | |
-| Role-based route guards | Not started | |
-| SMTP email via MailKit | Not started | |
-| RabbitMQ event consumers | Not started | |
-| SignalR in-app notifications | Not started | |
-| Approval nodes | Not started | |
-| External task tokens | Not started | |
-
-### Phase 3 — Analytics, calendar, infrastructure
-
-| Feature | Status | Notes |
-|---|---|---|
-| Analytics dashboard | Not started | |
-| Calendar view | Not started | |
-| Google Calendar sync | Not started | |
-| Microsoft Outlook sync | Not started | |
-| Triggered/scheduled workflows | Not started | |
-| Group workspaces | Not started | |
-| Proxmox + Docker hosting | Not started | |
-| Terraform infra-as-code | Not started | |
+**Why:** A tracker embedded in this file goes stale the moment a feature ships and
+this file isn't updated. One source of truth prevents briefs being written for
+features already built, or dependencies being missed.
 
 ---
 

@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackFlow.Application.Common.Interfaces;
+using StackFlow.Application.Common.Interfaces.Repositories;
 using StackFlow.Infrastructure.Persistence;
+using StackFlow.Infrastructure.Persistence.Repositories;
 
 namespace StackFlow.Infrastructure;
 
@@ -12,7 +15,6 @@ namespace StackFlow.Infrastructure;
 //   - AppDbContext (EF Core + Npgsql, reads ConnectionStrings:DefaultConnection)
 //
 // What is NOT registered here (added in later features):
-//   - Repository implementations (Feature 4)
 //   - RabbitMQ IEventBus (Phase 2)
 //   - MailKit IEmailService (Phase 2)
 //   - S3 IFileStorage (Phase 2)
@@ -34,6 +36,18 @@ public static class DependencyInjection
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
+
+        // ── Repositories (Feature 4) ──────────────────────────────────────────
+        // Scoped lifetime: one instance per HTTP request, shared within the same
+        // request so all repositories share the same DbContext and participate in
+        // the same implicit EF Core transaction.
+        services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+        services.AddScoped<IWorkflowTaskRepository, WorkflowTaskRepository>();
+        services.AddScoped<IWorkflowStateRepository, WorkflowStateRepository>();
+        services.AddScoped<IWorkflowTaskStateRepository, WorkflowTaskStateRepository>();
+        services.AddScoped<IWorkflowAuditRepository, WorkflowAuditRepository>();
+        services.AddScoped<IWorkflowTaskAuditRepository, WorkflowTaskAuditRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
