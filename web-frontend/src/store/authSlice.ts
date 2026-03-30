@@ -18,7 +18,6 @@
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { DevLoginResponseDto } from '@/modules/auth/dtos/AuthDto';
-import type { RootState } from './store';
 
 interface AuthState {
   accessToken: string | null;
@@ -61,8 +60,11 @@ const authSlice = createSlice({
 
 export const { setCredentials, clearCredentials } = authSlice.actions;
 
-// Typed selector — reads the full auth state from the Redux root.
+// Typed selector — reads the auth state slice from the Redux root.
+// Uses a minimal structural type { auth: AuthState } rather than the full RootState
+// so the selector remains usable in tests that configure a store with only the
+// auth reducer, without forcing the caller to supply unrelated slice state.
 // Usage: const { accessToken } = useAppSelector(selectAuth);
-export const selectAuth = (state: RootState) => state.auth;
+export const selectAuth = (state: { auth: AuthState }) => state.auth;
 
 export default authSlice.reducer;

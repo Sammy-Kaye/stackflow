@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { TooltipProvider } from '@/modules/shared/ui/components/tooltip';
 import { store } from '@/store/store';
 import { router } from '@/router/index';
 import './index.css';
@@ -34,8 +35,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster richColors position="top-right" />
+        <TooltipProvider delay={300}>
+          <RouterProvider router={router} />
+          <Toaster richColors position="top-right" />
+        </TooltipProvider>
       </QueryClientProvider>
     </Provider>
   </StrictMode>,

@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.*" />
+    <!-- Required so the Application layer can reference IServiceCollection and IServiceProvider
+         without depending on the Infrastructure or API layers. -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.*" />
+    <!-- Required so LoggingBehavior can reference ILogger<T> in the Application layer. -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.*" />
   </ItemGroup>
 
   <PropertyGroup>

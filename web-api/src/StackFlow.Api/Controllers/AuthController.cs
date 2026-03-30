@@ -20,6 +20,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using StackFlow.Application.Common.Mediator;
+using StackFlow.Domain.Constants;
 
 namespace StackFlow.Api.Controllers;
 
@@ -30,10 +32,11 @@ public class AuthController : BaseApiController
     // These values are fixed constants for Phase 1 developer convenience.
     // They are not read from any database — there is no User entity at this stage.
     // Phase 2 will replace this controller entirely with real user lookup + JWT issuance.
-    private static readonly Guid StubUserId =
-        new("00000000-0000-0000-0000-000000000001");
-    private static readonly Guid StubWorkspaceId =
-        new("00000000-0000-0000-0000-000000000002");
+    //
+    // WellKnownIds.DemoWorkspaceId  = 00000000-0000-0000-0000-000000000001 (stub user)
+    // WellKnownIds.GlobalWorkspaceId = 00000000-0000-0000-0000-000000000002 (stub workspace)
+    private static readonly Guid StubUserId = WellKnownIds.DemoWorkspaceId;
+    private static readonly Guid StubWorkspaceId = WellKnownIds.GlobalWorkspaceId;
     private const string StubEmail = "dev@stackflow.local";
     private const string StubRole = "Admin";
     private const int TokenExpiryHours = 24;
@@ -41,7 +44,10 @@ public class AuthController : BaseApiController
     private readonly IConfiguration _configuration;
     private readonly IHostEnvironment _environment;
 
-    public AuthController(IConfiguration configuration, IHostEnvironment environment)
+    public AuthController(
+        Mediator mediator,
+        IConfiguration configuration,
+        IHostEnvironment environment) : base(mediator)
     {
         _configuration = configuration;
         _environment = environment;

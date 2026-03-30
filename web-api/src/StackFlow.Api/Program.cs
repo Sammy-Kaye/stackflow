@@ -14,9 +14,15 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using StackFlow.Application;
 using StackFlow.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ── Application (mediator, pipeline behaviors, handlers) ─────────────────────
+// Feature 5: wires the custom CQRS mediator, ValidationBehavior, LoggingBehavior,
+// and auto-discovers all IRequestHandler<,> implementations via assembly scanning.
+builder.Services.AddApplication();
 
 // ── Infrastructure (DbContext, repositories, messaging) ───────────────────────
 // Feature 3: wires AppDbContext with Npgsql.

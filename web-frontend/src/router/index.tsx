@@ -1,37 +1,84 @@
 // router/index.tsx
 // Central route registry for the StackFlow frontend.
 //
-// Route guards:
-//   DevRoute      — only accessible when import.meta.env.DEV is true
-//   ProtectedRoute — requires a valid JWT in Redux auth state (Phase 2)
-//   AdminRoute    — requires admin role (Phase 2)
-//   GuestRoute    — redirects away if already logged in (Phase 2)
+// Route guard summary:
+//   DevRoute        — only accessible when import.meta.env.DEV is true
+//   ProtectedRoute  — requires a valid accessToken in Redux auth state;
+//                     redirects to /dev-login if missing; renders <Outlet />
+//   GuestRoute      — redirects authenticated users to /;
+//                     renders children if no token present
 //
-// Adding a new route:
+// Route tree:
+//   /                         → ProtectedRoute → AuthenticatedLayout
+//     index                   → redirect to /workflows
+//     /workflows              → WorkflowsPage (stub — replaced in Feature 8)
+//     /tasks                  → MyTasksPage (stub — replaced in Feature 13)
+//     /active                 → ActiveWorkflowsPage (stub — replaced in Feature 15)
+//   /dev-login                → DevRoute → GuestRoute → DevLoginPage
+//   *                         → NotFoundPage
+//
+// Adding a new authenticated route:
 //   1. Import the page component from its module.
-//   2. Add an object to the routes array with path, element, and the
-//      correct guard wrapping the page component.
-//   3. That's it — no other file needs to change.
+//   2. Add a `{ path, element }` object inside the AuthenticatedLayout children array.
+//   3. That is the only change required — layout and guards are inherited automatically.
 
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { DevRoute } from './guards/DevRoute';
+import { ProtectedRoute } from './guards/ProtectedRoute';
+import { GuestRoute } from './guards/GuestRoute';
+import { AuthenticatedLayout } from '@/modules/shared/ui/layouts/AuthenticatedLayout';
 import { DevLoginPage } from '@/modules/auth/ui/pages/DevLoginPage';
+import { WorkflowsPage } from '@/modules/workflows/ui/pages/WorkflowsPage';
+import { MyTasksPage } from '@/modules/tasks/ui/pages/MyTasksPage';
+import { ActiveWorkflowsPage } from '@/modules/workflows/ui/pages/ActiveWorkflowsPage';
+import { NotFoundPage } from '@/modules/shared/ui/pages/NotFoundPage';
 
 export const router = createBrowserRouter([
+  // Authenticated section — ProtectedRoute gate, then AuthenticatedLayout shell
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <AuthenticatedLayout />,
+        children: [
+          // Index: redirect / → /workflows so the shell always lands somewhere concrete
+          {
+            index: true,
+            element: <Navigate to="/workflows" replace />,
+          },
+          {
+            path: '/workflows',
+            element: <WorkflowsPage />,
+          },
+          {
+            path: '/tasks',
+            element: <MyTasksPage />,
+          },
+          {
+            path: '/active',
+            element: <ActiveWorkflowsPage />,
+          },
+        ],
+      },
+    ],
+  },
+
   // Dev-only login page — not accessible in production builds.
-  // The DevRoute guard redirects to / if import.meta.env.DEV is false.
+  // GuestRoute prevents a logged-in user from seeing this page.
   {
     path: '/dev-login',
     element: (
       <DevRoute>
-        <DevLoginPage />
+        <GuestRoute>
+          <DevLoginPage />
+        </GuestRoute>
       </DevRoute>
     ),
   },
 
-  // Placeholder root — will be replaced by the App Shell in Feature 6.
+  // Catch-all: any unmatched path renders the 404 page.
   {
-    path: '/',
-    element: <div>StackFlow — App Shell coming in Feature 6</div>,
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);

@@ -26,6 +26,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using StackFlow.Api.Controllers;
+using StackFlow.Application.Common.Mediator;
 
 namespace StackFlow.UnitTests.Auth;
 
@@ -70,13 +71,18 @@ public class AuthControllerTests
 
     /// <summary>
     /// Constructs a controller with optional HttpContext injection for Me() tests.
+    /// A real Mediator backed by an empty IServiceProvider is passed to BaseApiController.
+    /// AuthController's own logic never dispatches via the mediator, so the provider
+    /// returning null for all service requests is safe here.
     /// </summary>
     private static AuthController BuildController(
         Mock<IConfiguration> configMock,
         Mock<IHostEnvironment> envMock,
         ClaimsPrincipal? user = null)
     {
-        var controller = new AuthController(configMock.Object, envMock.Object);
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        var mediator = new Mediator(serviceProviderMock.Object);
+        var controller = new AuthController(mediator, configMock.Object, envMock.Object);
 
         if (user is not null)
         {

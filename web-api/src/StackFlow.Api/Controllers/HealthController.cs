@@ -8,12 +8,15 @@
 //   Response 200: { "status": "healthy" }
 
 using Microsoft.AspNetCore.Mvc;
+using StackFlow.Application.Common.Mediator;
 
 namespace StackFlow.Api.Controllers;
 
 [Route("health")]
 public class HealthController : BaseApiController
 {
+    public HealthController(Mediator mediator) : base(mediator) { }
+
     [HttpGet]
     [ProducesResponseType(typeof(HealthResponse), StatusCodes.Status200OK)]
     public IActionResult GetHealth()
