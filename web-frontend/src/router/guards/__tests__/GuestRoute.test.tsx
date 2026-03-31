@@ -49,8 +49,7 @@ function createTestStore(authenticated = false) {
 
 // ── Test helper ───────────────────────────────────────────────────────────────
 // Renders the GuestRoute with a child component inside a router context.
-// The /login route uses GuestRoute; the / route is where authenticated users
-// are redirected to.
+// The /login route uses GuestRoute; authenticated users are redirected to /workflows.
 function renderWithRouter(store: ReturnType<typeof createTestStore>) {
   return render(
     <Provider store={store}>
@@ -64,7 +63,7 @@ function renderWithRouter(store: ReturnType<typeof createTestStore>) {
               </GuestRoute>
             }
           />
-          <Route path="/" element={<div>Home Page</div>} />
+          <Route path="/workflows" element={<div>Workflows Page</div>} />
         </Routes>
       </MemoryRouter>
     </Provider>
@@ -93,12 +92,12 @@ describe('GuestRoute', () => {
   });
 
   describe('authenticated user (accessToken is present)', () => {
-    it('redirects to / when accessToken is set', () => {
+    it('redirects to /workflows when accessToken is set', () => {
       const store = createTestStore(true);
       renderWithRouter(store);
 
-      // The redirect should have happened, so we expect to see the home page content.
-      expect(screen.getByText('Home Page')).toBeInTheDocument();
+      // The redirect should have happened, so we expect to see the workflows page content.
+      expect(screen.getByText('Workflows Page')).toBeInTheDocument();
     });
 
     it('does not render the guest route children when authenticated', () => {

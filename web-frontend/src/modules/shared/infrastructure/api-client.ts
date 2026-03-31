@@ -6,9 +6,11 @@
 // this is the only file that changes. No component or hook ever imports
 // axios directly — they call their feature's service, which calls this.
 //
-// Base URL is read from VITE_API_URL at build time. In development this is
-// http://localhost:5000 (set in .env.local). In production it is the deployed
-// API URL injected by the Docker build.
+// Base URL strategy:
+//   Development — empty string so all /api/* requests go to the same origin
+//                 (:3000) and are forwarded to :5000 by the Vite proxy defined
+//                 in vite.config.ts. This avoids CORS issues entirely.
+//   Production  — VITE_API_URL is injected at build time (e.g. https://api.stackflow.app).
 //
 // Request interceptor: reads the access token from the Redux store on every
 // request and attaches it as Authorization: Bearer {token}. The store is
@@ -19,7 +21,7 @@ import axios from 'axios';
 import { store } from '@/store/store';
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL as string,
+  baseURL: import.meta.env.DEV ? '' : (import.meta.env.VITE_API_URL as string),
 });
 
 // Attach the bearer token from Redux auth state to every outgoing request.

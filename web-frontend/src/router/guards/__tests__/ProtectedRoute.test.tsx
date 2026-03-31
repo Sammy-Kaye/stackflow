@@ -2,7 +2,7 @@
 // Unit tests for the ProtectedRoute guard component.
 //
 // What is tested:
-//   Unauthenticated user (accessToken is null) → redirects to /dev-login
+//   Unauthenticated user (accessToken is null) → redirects to / (landing page)
 //   Authenticated user (accessToken is present) → renders <Outlet />
 //
 // Test strategy:
@@ -13,7 +13,7 @@
 //   child component is visible.
 
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { describe, it, expect } from 'vitest';
@@ -50,7 +50,7 @@ function createTestStore(authenticated = false) {
 // ── Test helper ───────────────────────────────────────────────────────────────
 // Renders the ProtectedRoute inside a router context with a protected and an
 // unprotected route so we can test redirect behavior.
-// The /protected route uses ProtectedRoute guard; /dev-login is unprotected.
+// The /protected route uses ProtectedRoute guard; / (landing page) is unprotected.
 // The ProtectedRoute renders a child component with text "Protected Content".
 function renderWithRouter(store: ReturnType<typeof createTestStore>) {
   return render(
@@ -60,7 +60,7 @@ function renderWithRouter(store: ReturnType<typeof createTestStore>) {
           <Route element={<ProtectedRoute />}>
             <Route path="protected" element={<div>Protected Content</div>} />
           </Route>
-          <Route path="/dev-login" element={<div>Dev Login Page</div>} />
+          <Route path="/" element={<div>Landing Page</div>} />
         </Routes>
       </MemoryRouter>
     </Provider>
@@ -71,12 +71,12 @@ function renderWithRouter(store: ReturnType<typeof createTestStore>) {
 
 describe('ProtectedRoute', () => {
   describe('unauthenticated user (accessToken is null)', () => {
-    it('redirects to /dev-login when accessToken is not set', () => {
+    it('redirects to / (landing page) when accessToken is not set', () => {
       const store = createTestStore(false);
       renderWithRouter(store);
 
-      // The redirect should have happened, so we expect to see the /dev-login content.
-      expect(screen.getByText('Dev Login Page')).toBeInTheDocument();
+      // The redirect should have happened, so we expect to see the landing page content.
+      expect(screen.getByText('Landing Page')).toBeInTheDocument();
     });
 
     it('does not render the protected route content when unauthenticated', () => {
@@ -97,19 +97,18 @@ describe('ProtectedRoute', () => {
       expect(screen.getByText('Protected Content')).toBeInTheDocument();
     });
 
-    it('does not render the login page when authenticated', () => {
+    it('does not render the landing page when authenticated', () => {
       const store = createTestStore(true);
       renderWithRouter(store);
 
-      // The login page should NOT be visible because the guard passed.
-      expect(screen.queryByText('Dev Login Page')).not.toBeInTheDocument();
+      // The landing page should NOT be visible because the guard passed.
+      expect(screen.queryByText('Landing Page')).not.toBeInTheDocument();
     });
   });
 
   describe('outlet rendering', () => {
     it('renders <Outlet /> which allows nested routes to render their content', () => {
       // This test verifies the guard does not interfere with the outlet mechanism.
-      const store = createTestStore(true);
       const testStore = configureStore({ reducer: { auth: authReducer } });
       testStore.dispatch(setCredentials(stubLoginResponse));
 
