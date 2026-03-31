@@ -128,3 +128,25 @@
     @apply font-sans;
     }
 }
+
+/* ─── StackFlow Design System Tokens ─────────────────────────────────────────
+   These extend the base shadcn theme with the StackFlow-specific palette.
+   Used primarily by the marketing landing page and any surface that needs
+   the tonal depth model described in DESIGN.md.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  --sf-surface:                  #131313;
+  --sf-surface-container-lowest: #0E0E0E;
+  --sf-surface-container-low:    #1C1B1B;
+  --sf-surface-container:        #201F1F;
+  --sf-surface-container-high:   #2A2A2A;
+  --sf-surface-container-highest:#353534;
+  --sf-surface-bright:           #3A3939;
+  --sf-on-surface:               #E5E2E1;
+  --sf-on-surface-variant:       #BCCAC1;
+  --sf-primary:                  #68DBAE;
+  --sf-primary-container:        #26A37A;
+  --sf-primary-fixed:            #86F8C9;
+  --sf-on-primary:               #003827;
+  --sf-outline-variant:          #3D4943;
+}

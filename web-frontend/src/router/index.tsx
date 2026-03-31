@@ -2,19 +2,17 @@
 // Central route registry for the StackFlow frontend.
 //
 // Route guard summary:
-//   DevRoute        — only accessible when import.meta.env.DEV is true
 //   ProtectedRoute  — requires a valid accessToken in Redux auth state;
-//                     redirects to /dev-login if missing; renders <Outlet />
-//   GuestRoute      — redirects authenticated users to /;
+//                     redirects to / (landing page) if missing; renders <Outlet />
+//   GuestRoute      — redirects authenticated users to /workflows;
 //                     renders children if no token present
 //
 // Route tree:
-//   /                         → ProtectedRoute → AuthenticatedLayout
-//     index                   → redirect to /workflows
+//   /                         → GuestRoute → LandingPage (public marketing page)
+//   ProtectedRoute (pathless) → AuthenticatedLayout
 //     /workflows              → WorkflowsPage (stub — replaced in Feature 8)
 //     /tasks                  → MyTasksPage (stub — replaced in Feature 13)
 //     /active                 → ActiveWorkflowsPage (stub — replaced in Feature 15)
-//   /dev-login                → DevRoute → GuestRoute → DevLoginPage
 //   *                         → NotFoundPage
 //
 // Adding a new authenticated route:
@@ -22,30 +20,34 @@
 //   2. Add a `{ path, element }` object inside the AuthenticatedLayout children array.
 //   3. That is the only change required — layout and guards are inherited automatically.
 
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { DevRoute } from './guards/DevRoute';
+import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './guards/ProtectedRoute';
 import { GuestRoute } from './guards/GuestRoute';
 import { AuthenticatedLayout } from '@/modules/shared/ui/layouts/AuthenticatedLayout';
-import { DevLoginPage } from '@/modules/auth/ui/pages/DevLoginPage';
+import { LandingPage } from '@/modules/landing/ui/pages/LandingPage';
 import { WorkflowsPage } from '@/modules/workflows/ui/pages/WorkflowsPage';
 import { MyTasksPage } from '@/modules/tasks/ui/pages/MyTasksPage';
 import { ActiveWorkflowsPage } from '@/modules/workflows/ui/pages/ActiveWorkflowsPage';
 import { NotFoundPage } from '@/modules/shared/ui/pages/NotFoundPage';
 
 export const router = createBrowserRouter([
-  // Authenticated section — ProtectedRoute gate, then AuthenticatedLayout shell
+  // Public landing page — redirects to /workflows if already authenticated
+  {
+    path: '/',
+    element: (
+      <GuestRoute>
+        <LandingPage />
+      </GuestRoute>
+    ),
+  },
+
+  // Authenticated section — ProtectedRoute gate (pathless), then AuthenticatedLayout shell
   {
     element: <ProtectedRoute />,
     children: [
       {
         element: <AuthenticatedLayout />,
         children: [
-          // Index: redirect / → /workflows so the shell always lands somewhere concrete
-          {
-            index: true,
-            element: <Navigate to="/workflows" replace />,
-          },
           {
             path: '/workflows',
             element: <WorkflowsPage />,
@@ -61,19 +63,6 @@ export const router = createBrowserRouter([
         ],
       },
     ],
-  },
-
-  // Dev-only login page — not accessible in production builds.
-  // GuestRoute prevents a logged-in user from seeing this page.
-  {
-    path: '/dev-login',
-    element: (
-      <DevRoute>
-        <GuestRoute>
-          <DevLoginPage />
-        </GuestRoute>
-      </DevRoute>
-    ),
   },
 
   // Catch-all: any unmatched path renders the 404 page.

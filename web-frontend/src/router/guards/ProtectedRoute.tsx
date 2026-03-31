@@ -2,8 +2,8 @@
 // Route guard that requires a valid access token in Redux auth state.
 //
 // If accessToken is null (user is not authenticated), the user is redirected
-// to /dev-login and the guarded layout is never rendered. The `replace` prop
-// prevents the guarded URL from being added to the browser history — so the
+// to / (the landing page) and the guarded layout is never rendered. The `replace`
+// prop prevents the guarded URL from being added to the browser history — so the
 // back button after redirect does not loop the user back to the protected route.
 //
 // This guard wraps a layout route (not a single page), so it renders <Outlet />
@@ -25,7 +25,7 @@ export function ProtectedRoute() {
   const { accessToken } = useAppSelector(selectAuth);
 
   if (!accessToken) {
-    return <Navigate to="/dev-login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;
