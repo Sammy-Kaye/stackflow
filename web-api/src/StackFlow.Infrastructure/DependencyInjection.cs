@@ -29,10 +29,12 @@ public static class DependencyInjection
         // In production, this is set via the ConnectionStrings__DefaultConnection
         // environment variable (double underscore = colon in .NET configuration).
         // Never hardcode a connection string.
-        var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException(
-                "Connection string 'DefaultConnection' is missing. " +
-                "Set the ConnectionStrings__DefaultConnection environment variable.");
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' is missing or empty. " +
+                "Set it in appsettings.Development.json or via the " +
+                "ConnectionStrings__DefaultConnection environment variable.");
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));

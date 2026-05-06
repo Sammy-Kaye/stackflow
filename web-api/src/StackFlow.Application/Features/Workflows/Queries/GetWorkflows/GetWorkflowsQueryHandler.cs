@@ -38,16 +38,12 @@ public sealed class GetWorkflowsQueryHandler
     public async Task<Result<WorkflowListDto>> Handle(
         GetWorkflowsQuery query, CancellationToken ct)
     {
-        // Fetch workspace-owned workflows and global templates in parallel.
-        var workspaceWorkflowsTask = _repo.GetByWorkspaceAsync(_currentUser.WorkspaceId, ct);
-        var globalWorkflowsTask = _repo.GetByWorkspaceAsync(WellKnownIds.GlobalWorkspaceId, ct);
+        // Sequential queries — EF Core DbContext is not thread-safe; Task.WhenAll on the
+        // same scoped context causes a concurrent operation exception.
+        var workspaceWorkflows = await _repo.GetByWorkspaceAsync(_currentUser.WorkspaceId, ct);
+        var globalWorkflows = await _repo.GetByWorkspaceAsync(WellKnownIds.GlobalWorkspaceId, ct);
 
-        await Task.WhenAll(workspaceWorkflowsTask, globalWorkflowsTask);
-
-        var workspaceWorkflows = workspaceWorkflowsTask.Result;
-        var globalWorkflows = globalWorkflowsTask.Result;
-
-        // Build summary DTOs: for each workflow fetch its task count.
+        // Build summary DTOs — for each workflow fetch its task count.
         // Workspace workflows first (isGlobal = false), global templates after (isGlobal = true).
         var summaries = new List<WorkflowSummaryDto>();
 
