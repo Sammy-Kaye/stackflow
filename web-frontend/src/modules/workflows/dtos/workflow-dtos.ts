@@ -35,7 +35,7 @@ export interface WorkflowTaskDto {
   assigneeType: AssigneeType;
   defaultAssignedToEmail: string | null;
   orderIndex: number;
-  dueAtOffsetDays: number;
+  dueAtOffsetDays: number | null;
   nodeType: NodeType;
   conditionConfig: string | null;
   parentTaskId: string | null;         // UUID string | null
