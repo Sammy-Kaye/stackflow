@@ -645,7 +645,7 @@ docker compose up -d               # start all services
 | 6 | App Shell + Routing | — | ✅ | ✅ | ✅ | ✅ |
 | 7 | Landing Page | — | ✅ | ✅ | ✅ | ✅ |
 | 8 | Workflow CRUD (Templates) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 9 | Workflow Builder UI | — | ⬜ | ⬜ | ⬜ | ⬜ |
+| 9 | Workflow Builder UI | — | ✅ | ✅ | ✅ | ✅ |
 | 10 | Template Library | — | ⬜ | ⬜ | ⬜ | ⬜ |
 | 11 | WorkflowState Spawn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 | 12 | WorkflowTask Execution + Audit Trail | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
