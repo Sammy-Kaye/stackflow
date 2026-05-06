@@ -10,7 +10,9 @@
 // Route tree:
 //   /                         → GuestRoute → LandingPage (public marketing page)
 //   ProtectedRoute (pathless) → AuthenticatedLayout
-//     /workflows              → WorkflowsPage (stub — replaced in Feature 8)
+//     /workflows              → WorkflowsListPage (Feature 8)
+//     /workflows/new          → WorkflowBuilderPage (stub — built in Feature 9)
+//     /workflows/:id/edit     → WorkflowBuilderPage (stub — built in Feature 9)
 //     /tasks                  → MyTasksPage (stub — replaced in Feature 13)
 //     /active                 → ActiveWorkflowsPage (stub — replaced in Feature 15)
 //   *                         → NotFoundPage
@@ -25,7 +27,8 @@ import { ProtectedRoute } from './guards/ProtectedRoute';
 import { GuestRoute } from './guards/GuestRoute';
 import { AuthenticatedLayout } from '@/modules/shared/ui/layouts/AuthenticatedLayout';
 import { LandingPage } from '@/modules/landing/ui/pages/LandingPage';
-import { WorkflowsPage } from '@/modules/workflows/ui/pages/WorkflowsPage';
+import { WorkflowsListPage } from '@/modules/workflows/ui/pages/WorkflowsListPage';
+import { WorkflowBuilderPage } from '@/modules/workflows/ui/pages/WorkflowBuilderPage';
 import { MyTasksPage } from '@/modules/tasks/ui/pages/MyTasksPage';
 import { ActiveWorkflowsPage } from '@/modules/workflows/ui/pages/ActiveWorkflowsPage';
 import { NotFoundPage } from '@/modules/shared/ui/pages/NotFoundPage';
@@ -48,9 +51,19 @@ export const router = createBrowserRouter([
       {
         element: <AuthenticatedLayout />,
         children: [
+          // Feature 8: Workflow template list page
           {
             path: '/workflows',
-            element: <WorkflowsPage />,
+            element: <WorkflowsListPage />,
+          },
+          // Feature 9 stubs: workflow builder (create + edit)
+          {
+            path: '/workflows/new',
+            element: <WorkflowBuilderPage />,
+          },
+          {
+            path: '/workflows/:id/edit',
+            element: <WorkflowBuilderPage />,
           },
           {
             path: '/tasks',

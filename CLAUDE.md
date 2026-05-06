@@ -639,12 +639,12 @@ docker compose up -d               # start all services
 |---|---|---|---|---|---|---|
 | 1 | Project Scaffold | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 2 | Dev Auth Stub | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 3 | Domain Entities + DB | ⬜ | — | ⬜ | ⬜ | ⬜ |
-| 4 | Repository Layer | ⬜ | — | ⬜ | ⬜ | ⬜ |
-| 5 | Custom Mediator + Pipeline | ⬜ | — | ⬜ | ⬜ | ⬜ |
-| 6 | App Shell + Routing | — | ⬜ | ⬜ | ⬜ | ⬜ |
-| 7 | Landing Page | — | ⬜ | ⬜ | ⬜ | ⬜ |
-| 8 | Workflow CRUD (Templates) | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
+| 3 | Domain Entities + DB | ✅ | — | ✅ | ✅ | ✅ |
+| 4 | Repository Layer | ✅ | — | ✅ | ✅ | ✅ |
+| 5 | Custom Mediator + Pipeline | ✅ | — | ✅ | ✅ | ✅ |
+| 6 | App Shell + Routing | — | ✅ | ✅ | ✅ | ✅ |
+| 7 | Landing Page | — | ✅ | ✅ | ✅ | ✅ |
+| 8 | Workflow CRUD (Templates) | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
 | 9 | Workflow Builder UI | — | ⬜ | ⬜ | ⬜ | ⬜ |
 | 10 | Template Library | — | ⬜ | ⬜ | ⬜ | ⬜ |
 | 11 | WorkflowState Spawn | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |

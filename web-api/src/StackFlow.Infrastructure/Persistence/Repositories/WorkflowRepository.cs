@@ -31,7 +31,7 @@ public class WorkflowRepository : IWorkflowRepository
         => await _context.Workflows
             .AsNoTracking()
             .Where(w => w.WorkspaceId == workspaceId)
-            .OrderBy(w => w.Name)
+            .OrderByDescending(w => w.CreatedAt)
             .ToListAsync(ct);
 
     public async Task AddAsync(Workflow workflow, CancellationToken ct)

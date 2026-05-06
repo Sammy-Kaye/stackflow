@@ -66,6 +66,38 @@ public abstract class BaseApiController : ControllerBase
         return MapFailure(result.Error);
     }
 
+    /// <summary>
+    /// Maps a Result carrying a value to 201 Created.
+    /// Used by POST endpoints that create a new resource.
+    /// IsSuccess = true              → 201 Created with the value serialised as the response body.
+    /// IsFailure + "not found"       → 404 Not Found with { "error": "..." }.
+    /// IsFailure + "forbidden"       → 403 Forbidden (no body).
+    /// IsFailure (anything else)     → 400 Bad Request with { "error": "..." }.
+    /// </summary>
+    protected IActionResult HandleCreatedResult<T>(Result<T> result)
+    {
+        if (result.IsSuccess)
+            return StatusCode(StatusCodes.Status201Created, result.Value);
+
+        return MapFailure(result.Error);
+    }
+
+    /// <summary>
+    /// Maps a non-generic Result to 204 No Content.
+    /// Used by DELETE endpoints where success produces no response body.
+    /// IsSuccess = true              → 204 No Content.
+    /// IsFailure + "not found"       → 404 Not Found with { "error": "..." }.
+    /// IsFailure + "forbidden"       → 403 Forbidden (no body).
+    /// IsFailure (anything else)     → 400 Bad Request with { "error": "..." }.
+    /// </summary>
+    protected IActionResult HandleNoContentResult(Result result)
+    {
+        if (result.IsSuccess)
+            return NoContent();
+
+        return MapFailure(result.Error);
+    }
+
     // Maps a failure error string to the correct HTTP status code.
     // Extracted so both HandleResult overloads share the same mapping logic.
     private IActionResult MapFailure(string error)

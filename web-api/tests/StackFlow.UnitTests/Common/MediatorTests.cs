@@ -18,6 +18,7 @@ using StackFlow.Application.Common;
 using StackFlow.Application.Common.Behaviors;
 using StackFlow.Application.Common.Mediator;
 using Microsoft.Extensions.DependencyInjection;
+using PingCommand = StackFlow.Application.Features.Ping.PingCommand;
 
 namespace StackFlow.UnitTests.Common;
 
@@ -52,7 +53,7 @@ public class MediatorTests
         var mediator = serviceProvider.GetRequiredService<Mediator>();
 
         // Act — use PingCommand which is a real command in StackFlow.Application
-        var result = await mediator.Send<Result<string>>(new PingCommand());
+        var result = await mediator.Send<Result<object>>(new PingCommand());
 
         // Assert
         Assert.True(result.IsSuccess);

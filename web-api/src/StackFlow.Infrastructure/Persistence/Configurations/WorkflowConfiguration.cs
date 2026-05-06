@@ -22,7 +22,7 @@ public class WorkflowConfiguration : IEntityTypeConfiguration<Workflow>
             .HasMaxLength(2000);
 
         builder.Property(w => w.Category)
-            .HasMaxLength(200);
+            .HasMaxLength(100);
 
         builder.Property(w => w.IsActive)
             .IsRequired();

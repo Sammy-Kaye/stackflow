@@ -14,7 +14,9 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using StackFlow.Api.Services;
 using StackFlow.Application;
+using StackFlow.Application.Common.Interfaces;
 using StackFlow.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,12 @@ builder.Services.AddApplication();
 // Feature 3: wires AppDbContext with Npgsql.
 // Feature 4 will add repository registrations to this same extension method.
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// ── Current user service ──────────────────────────────────────────────────────
+// IHttpContextAccessor is required by CurrentUserService to read JWT claims.
+// CurrentUserService is Scoped — one instance per HTTP request.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // ── Controllers ──────────────────────────────────────────────────────────────
 builder.Services.AddControllers()

@@ -17,6 +17,7 @@ using StackFlow.Application;
 using StackFlow.Application.Common;
 using StackFlow.Application.Common.Behaviors;
 using StackFlow.Application.Common.Mediator;
+using PingCommand = StackFlow.Application.Features.Ping.PingCommand;
 
 namespace StackFlow.IntegrationTests;
 
@@ -176,7 +177,7 @@ public class DependencyInjectionTests
         var mediator = serviceProvider.GetRequiredService<Mediator>();
 
         // Act
-        var result = await mediator.Send<Result<string>>(new PingCommand());
+        var result = await mediator.Send<Result<object>>(new PingCommand());
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -203,7 +204,3 @@ public class DependencyInjectionTests
         Assert.NotNull(validators);
     }
 }
-
-// Helper: import the actual PingCommand from Application to verify it's discoverable
-// This import verifies the test can access the production command type.
-using PingCommand = StackFlow.Application.Features.Ping.PingCommand;
