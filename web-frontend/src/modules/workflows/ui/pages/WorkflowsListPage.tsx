@@ -39,12 +39,12 @@ export function WorkflowsListPage() {
   const { role } = useAppSelector(selectAuth);
   const isAdmin = role === 'Admin';
 
-  const { data, isLoading } = useWorkflows();
+  const { data, isLoading, isError } = useWorkflows();
   const deleteMutation = useDeleteWorkflow();
 
   const workflows = data?.items ?? [];
   const hasWorkspaceWorkflows = workflows.some((w) => !w.isGlobal);
-  const showEmptyState = !isLoading && !hasWorkspaceWorkflows;
+  const showEmptyState = !isLoading && !isError && !hasWorkspaceWorkflows;
 
   return (
     <div className="flex flex-col gap-6">
@@ -66,8 +66,15 @@ export function WorkflowsListPage() {
         </div>
       )}
 
+      {/* Error state */}
+      {isError && (
+        <div className="rounded-xl border border-destructive/30 bg-destructive/5 px-6 py-4 text-sm text-destructive">
+          Failed to load workflows. Please refresh and try again.
+        </div>
+      )}
+
       {/* Loaded state — real workflow cards */}
-      {!isLoading && workflows.length > 0 && (
+      {!isLoading && !isError && workflows.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {workflows.map((workflow) => (
             <WorkflowCard

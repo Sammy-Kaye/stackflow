@@ -15,6 +15,7 @@
 //   is registered automatically. Adding a new handler requires zero changes here.
 
 using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using StackFlow.Application.Common.Behaviors;
 using StackFlow.Application.Common.Mediator;
@@ -30,11 +31,18 @@ public static class DependencyInjection
         // IServiceProvider so it can resolve handlers and behaviors on demand.
         services.AddScoped<Mediator>();
 
+        // ── Validator assembly scanning ───────────────────────────────────────
+        // Discovers every AbstractValidator<T> implementation in this assembly and
+        // registers it as IValidator<T> (Transient, FluentValidation default).
+        // ValidationBehavior resolves IEnumerable<IValidator<TRequest>> per request;
+        // without this registration that collection is always empty and validation never runs.
+        var assembly = Assembly.GetExecutingAssembly();
+        services.AddValidatorsFromAssembly(assembly);
+
         // ── Handler assembly scanning ─────────────────────────────────────────
         // Discovers every IRequestHandler<TRequest, TResponse> implementation in this
         // assembly and registers it as Scoped. This means adding a new handler in any
         // Features/ subfolder requires no manual DI wiring — it is picked up automatically.
-        var assembly = Assembly.GetExecutingAssembly();
 
         var handlerTypes = assembly.GetTypes()
             .Where(t => t is { IsAbstract: false, IsInterface: false })
