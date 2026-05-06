@@ -33,10 +33,10 @@ public class AuthController : BaseApiController
     // They are not read from any database — there is no User entity at this stage.
     // Phase 2 will replace this controller entirely with real user lookup + JWT issuance.
     //
-    // WellKnownIds.DemoWorkspaceId  = 00000000-0000-0000-0000-000000000001 (stub user)
-    // WellKnownIds.GlobalWorkspaceId = 00000000-0000-0000-0000-000000000002 (stub workspace)
+    // WellKnownIds.DemoWorkspaceId  = 00000000-0000-0000-0000-000000000001 (demo workspace)
+    // WellKnownIds.GlobalWorkspaceId = 00000000-0000-0000-0000-000000000002 (global templates — never a user workspace)
     private static readonly Guid StubUserId = WellKnownIds.DemoWorkspaceId;
-    private static readonly Guid StubWorkspaceId = WellKnownIds.GlobalWorkspaceId;
+    private static readonly Guid StubWorkspaceId = WellKnownIds.DemoWorkspaceId;
     private const string StubEmail = "dev@stackflow.local";
     private const string StubRole = "Admin";
     private const int TokenExpiryHours = 24;
