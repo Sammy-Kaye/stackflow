@@ -13,7 +13,8 @@
       "mcp__postgres__query",
       "mcp__stitch__list_projects",
       "mcp__github__list_commits",
-      "mcp__stitch__list_screens"
+      "mcp__stitch__list_screens",
+      "PowerShell(pandoc \"C:\\\\Users\\\\samue\\\\Downloads\\\\wedding-website-scope \\(1\\).docx\" -t plain)"
     ]
   }
 }
