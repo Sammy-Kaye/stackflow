@@ -53,8 +53,14 @@ public sealed class GetWorkflowsQueryHandler
             summaries.Add(workflow.ToSummaryDto(tasks.Count, isGlobal: false));
         }
 
+        // Only add global workflows that are not already in the list.
+        // Guards against the edge case where the user's workspace IS the global workspace
+        // (e.g. dev auth stub misconfiguration), which would otherwise return duplicates.
+        var seen = new HashSet<Guid>(summaries.Select(s => s.Id));
+
         foreach (var workflow in globalWorkflows)
         {
+            if (!seen.Add(workflow.Id)) continue;
             var tasks = await _taskRepo.GetByWorkflowIdAsync(workflow.Id, ct);
             summaries.Add(workflow.ToSummaryDto(tasks.Count, isGlobal: true));
         }
